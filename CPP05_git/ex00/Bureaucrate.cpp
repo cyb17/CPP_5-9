@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 10:24:52 by yachen            #+#    #+#             */
-/*   Updated: 2024/03/19 12:25:09 by yachen           ###   ########.fr       */
+/*   Updated: 2024/03/19 15:06:41 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,34 +14,32 @@
 
 Bureaucrate::Bureaucrate( const std::string nm, int gd ) : name( nm )
 {
-	if (gd < 1 || gd > 150)
-		throw std::out_of_range(this->name + " initial grade is out of range !");
+	if (gd < 1)
+		throw Bureaucrate::GradeTooHighException( this->name + ": grade initial is too high");
+	else if (gd > 150)
+		throw Bureaucrate::GradeTooLowException( this->name + ": grade initial is too low" );
 	this->grade = gd;
-	std::cout << this->name << " constructor called" << std::endl;	
+	std::cout << CYAN << this->name << " constructor called" << RESET << std::endl;	
 }
 
-Bureaucrate::Bureaucrate( const Bureaucrate& other )
+Bureaucrate::Bureaucrate( const Bureaucrate& other ) : name( other.name )
 {
 	*this = other;
-	std::cout << this->name << " copy constructor called" << std::endl;	
+	std::cout << CYAN << this->name << " copy constructor called" << RESET << std::endl;	
 }
 
 Bureaucrate&	Bureaucrate::operator = ( const Bureaucrate& other )
 {
 	if (this != &other)
 		this->grade = other.getGrade();
-	std::cout << this->name << " assignation operator called" << std::endl;	
+	std::cout << CYAN << "assignation operator called" << RESET << std::endl;
 	return (*this);
 }
 
 Bureaucrate::~Bureaucrate()
 {
-	std::cout << this->name << " destructor called" << std::endl;	
+	std::cout << MAGENTA << this->name << " destructor called" << RESET << std::endl;	
 }
-
-const char* Bureaucrate::GradeTooHighException()
-const char* Bureaucrate::GradeTooLowException() 
-
 
 const std::string	Bureaucrate::getName() const
 {
@@ -56,19 +54,36 @@ int	Bureaucrate::getGrade() const
 void	Bureaucrate::incrementeGrade()
 {
 	if (this->grade == 1)
-		throw std::out_of_range(this->name + " can not incremente, bureaucrate grade will be out of range !");
+		throw Bureaucrate::GradeTooHighException( this->name + ": can not incremente, grade will be too high" );
 	this->grade--;
 }
 
 void	Bureaucrate::decrementeGrade()
 {
 	if (this->grade == 150)
-		throw std::out_of_range(this->name + " can not decremente, bureaucrate grade will be out of range !");
+		throw Bureaucrate::GradeTooLowException( this->name + ": can not decremente, grade will be too low" );
 	this->grade++;
 }
 
 std::ostream&	operator<<( std::ostream& os, const Bureaucrate& obj )
 {
-	os << obj.getName() << ", bureaucrate grade " << obj.getGrade();
+	os << BLUE << obj.getName() << ", bureaucrate grade " << obj.getGrade() << RESET;
 	return os;
 }
+
+Bureaucrate::GradeTooHighException::GradeTooHighException( const std::string msg ) throw() : errMsg( msg ) {}
+Bureaucrate::GradeTooHighException::~GradeTooHighException() throw() {}
+
+Bureaucrate::GradeTooLowException::GradeTooLowException( const std::string msg ) throw() : errMsg( msg ) {}
+Bureaucrate::GradeTooLowException::~GradeTooLowException() throw() {}
+
+const char* Bureaucrate::GradeTooHighException::what() const throw()
+{
+	return (errMsg.c_str());
+}
+
+const char* Bureaucrate::GradeTooLowException::what() const throw()
+{
+	return (errMsg.c_str());
+}
+
