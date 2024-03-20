@@ -1,0 +1,34 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ShrubberyCreationForm.hpp                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/03/20 11:12:28 by yachen            #+#    #+#             */
+/*   Updated: 2024/03/20 13:43:31 by yachen           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#ifndef SHRUBBERY_CREATION_FORM_HPP
+# define SHRUBBERY_CREATION_FORM_HPP
+
+#include <fstream>
+#include <iostream>
+#include "../includes/AForm.hpp"
+
+class	ShrubberyCreationForm : public AForm
+{
+	public:
+
+		ShrubberyCreationForm( const std::string nm );
+		ShrubberyCreationForm( const ShrubberyCreationForm& other );
+		ShrubberyCreationForm&	operator = ( const ShrubberyCreationForm& other );
+		~ShrubberyCreationForm();
+		
+		void	execute( const Bureaucrat& ref );
+		void	formAction();
+		void	writeTrees( std::fstream fs );
+};
+
+#endif

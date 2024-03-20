@@ -6,12 +6,12 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 11:36:49 by yachen            #+#    #+#             */
-/*   Updated: 2024/03/20 10:29:49 by yachen           ###   ########.fr       */
+/*   Updated: 2024/03/20 11:09:59 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Bureaucrate.hpp"
-#include "Form.hpp"
+#include "../include/Bureaucrate.hpp"
+#include "../include/Form.hpp"
 
 int	main( void )
 {	

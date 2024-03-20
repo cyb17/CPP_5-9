@@ -1,39 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Form.cpp                                           :+:      :+:    :+:   */
+/*   ForAm.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 15:20:29 by yachen            #+#    #+#             */
-/*   Updated: 2024/03/20 10:22:27 by yachen           ###   ########.fr       */
+/*   Updated: 2024/03/20 11:15:51 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Form.hpp"
-#include "Bureaucrate.hpp"
+#include "../includes/AForm.hpp"
+#include "../includes/Bureaucrate.hpp"
 
-Form::Form( const std::string nm, const int signGrade, const int exeGrade ) : name( nm ), reqSignGrade( signGrade ), reqExeGrade( exeGrade )
+AForm::AForm( const std::string nm, const int signGrade, const int exeGrade ) : name( nm ), reqSignGrade( signGrade ), reqExeGrade( exeGrade )
 {
 	if (signGrade < 1)
-		throw Form::GradeTooHighException( this->name + ": sign grade initial is too high");
+		throw AForm::GradeTooHighException( this->name + ": sign grade initial is too high");
 	else if (signGrade > 150)
-		throw Form::GradeTooLowException( this->name + ": sign grade initial is too low" );
+		throw AForm::GradeTooLowException( this->name + ": sign grade initial is too low" );
 	else if (exeGrade < 1)
-		throw Form::GradeTooHighException( this->name + ": execution grade initial is too high");
+		throw AForm::GradeTooHighException( this->name + ": execution grade initial is too high");
 	else if (exeGrade > 150)
-		throw Form::GradeTooLowException( this->name + ": execution grade initial is too low" );
+		throw AForm::GradeTooLowException( this->name + ": execution grade initial is too low" );
 	this->signStatus = 0;
 	std::cout << CYAN << this->name << " constructor called" << RESET << std::endl;	
 }
 
-Form::Form( const Form& other ) : name( other.name ), reqSignGrade( other.reqSignGrade ), reqExeGrade( other.reqExeGrade )
+AForm::AForm( const AForm& other ) : name( other.name ), reqSignGrade( other.reqSignGrade ), reqExeGrade( other.reqExeGrade )
 {
 	*this = other;
 	std::cout << CYAN << this->name << " copy constructor called" << RESET << std::endl;	
 }
 
-Form&	Form::operator = ( const Form& other )
+AForm&	AForm::operator = ( const AForm& other )
 {
 	if (this != &other)
 		this->signStatus = other.getSignStatus();
@@ -41,32 +41,32 @@ Form&	Form::operator = ( const Form& other )
 	return (*this);
 }
 
-Form::~Form()
+AForm::~AForm()
 {
 	std::cout << MAGENTA << this->name << " destructor called" << RESET << std::endl;	
 }
 
-const std::string	Form::getName() const
+const std::string	AForm::getName() const
 {
 	return this->name;
 }
 
-bool	Form::getSignStatus() const
+bool	AForm::getSignStatus() const
 {
 	return this->signStatus;
 }
 
-int		Form::getReqSignGrade() const
+int		AForm::getReqSignGrade() const
 {
 	return this->reqSignGrade;
 }
 
-int		Form::getReqExeGrade() const
+int		AForm::getReqExeGrade() const
 {
 	return this->reqExeGrade;
 }
 
-void	Form::beSigned( Bureaucrate& ref )
+void	AForm::beSigned( Bureaucrate& ref )
 {
 	if (ref.getGrade() <= this->reqSignGrade)
 	{
@@ -74,27 +74,27 @@ void	Form::beSigned( Bureaucrate& ref )
 		std::cout << GREEN << this->name << " is signed by " << ref.getName() << RESET << std::endl;
 	}
 	else
-		throw Form::GradeTooLowException( ref.getName() + "'grade is to low to sign " + this->name );
+		throw AForm::GradeTooLowException( ref.getName() + "'grade is to low to sign " + this->name );
 }
 
-std::ostream&	operator<<( std::ostream& os, const Form& obj )
+std::ostream&	operator<<( std::ostream& os, const AForm& obj )
 {
 	os << BLUE << obj.getName() << " sign status: " << obj.getSignStatus() << ": require: grade "<< obj.getReqSignGrade() << " for signing, grade " << obj.getReqExeGrade() << " for execution " << RESET;
 	return os;
 }
 
-Form::GradeTooHighException::GradeTooHighException( const std::string msg ) throw() : errMsg( msg ) {}
-Form::GradeTooHighException::~GradeTooHighException() throw() {}
+AForm::GradeTooHighException::GradeTooHighException( const std::string msg ) throw() : errMsg( msg ) {}
+AForm::GradeTooHighException::~GradeTooHighException() throw() {}
 
-Form::GradeTooLowException::GradeTooLowException( const std::string msg ) throw() : errMsg( msg ) {}
-Form::GradeTooLowException::~GradeTooLowException() throw() {}
+AForm::GradeTooLowException::GradeTooLowException( const std::string msg ) throw() : errMsg( msg ) {}
+AForm::GradeTooLowException::~GradeTooLowException() throw() {}
 
-const char* Form::GradeTooHighException::what() const throw()
+const char* AForm::GradeTooHighException::what() const throw()
 {
 	return (errMsg.c_str());
 }
 
-const char* Form::GradeTooLowException::what() const throw()
+const char* AForm::GradeTooLowException::what() const throw()
 {
 	return (errMsg.c_str());
 }

@@ -6,12 +6,12 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 10:24:52 by yachen            #+#    #+#             */
-/*   Updated: 2024/03/20 10:27:46 by yachen           ###   ########.fr       */
+/*   Updated: 2024/03/20 13:34:56 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Bureaucrate.hpp"
-#include "Form.hpp"
+#include "../includes/Bureaucrate.hpp"
+#include "../includes/AForm.hpp"
 
 Bureaucrate::Bureaucrate( const std::string nm, int gd ) : name( nm )
 {
@@ -66,7 +66,7 @@ void	Bureaucrate::decrementeGrade()
 	this->grade++;
 }
 
-void	Bureaucrate::signForm( Form& ref )
+void	Bureaucrate::signForm( AForm& ref )
 {
 	if (this->grade <= ref.getReqSignGrade())
 		std::cout << GREEN << this->name << " signed " << ref.getName() << RESET << std::endl;
@@ -75,6 +75,12 @@ void	Bureaucrate::signForm( Form& ref )
 		std::cout << RED << this->name << " couldn't sign " << ref.getName() << " because ";
 		std::cout << this->name << "'s grade is too low " << RESET << std::endl;
 	} 
+}
+
+void	Bureaucrate::executeForm( const AForm& form )
+{
+	form.execute( *this );
+	// if (this->grade <= form.getReqSignGrade() && this->grade <= form.getReqExeGrade())
 }
 
 std::ostream&	operator<<( std::ostream& os, const Bureaucrate& obj )
