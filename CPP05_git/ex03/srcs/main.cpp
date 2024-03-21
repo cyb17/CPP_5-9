@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 11:36:49 by yachen            #+#    #+#             */
-/*   Updated: 2024/03/21 14:03:11 by yachen           ###   ########.fr       */
+/*   Updated: 2024/03/21 16:16:30 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include "../includes/ShrubberyCreationForm.hpp"
 #include "../includes/RobotomyRequestForm.hpp"
 #include "../includes/PresidentialPardonForm.hpp"
+#include "../includes/Intern.hpp"
 
 int	main( void )
 {	
@@ -52,6 +53,13 @@ int	main( void )
 	
 	PresidentialPardonForm	PresidentialPardonForm( "somebody" );
 	Somebody.executeForm( PresidentialPardonForm );
+	
+	std::cout << YELLOW << "-----------------------------------------------------------------\n";
+	
+	Intern	intern;
+	AForm*	tmp;
+	
+	tmp = intern.makeForm( "PresidentialPardonForm", "target" );
 	
 	std::cout << "End of program" << std::endl;
 
