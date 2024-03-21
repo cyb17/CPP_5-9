@@ -69,7 +69,7 @@ class	AForm
 		virtual int					getReqSignGrade() const;
 		virtual int					getReqExeGrade() const;
 		virtual void				beSigned( Bureaucrate& ref );
-		virtual	void				execute( const Bureaucrat& ref ) = 0;
+		virtual	void				execute( const Bureaucrate& ref ) const = 0;
 };
 
 std::ostream&	operator<<( std::ostream& os, const AForm& obj );

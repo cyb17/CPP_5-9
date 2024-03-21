@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 11:12:28 by yachen            #+#    #+#             */
-/*   Updated: 2024/03/20 13:43:31 by yachen           ###   ########.fr       */
+/*   Updated: 2024/03/21 11:23:57 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include <fstream>
 #include <iostream>
 #include "../includes/AForm.hpp"
+#include "../includes/Bureaucrate.hpp"
 
 class	ShrubberyCreationForm : public AForm
 {
@@ -26,9 +27,9 @@ class	ShrubberyCreationForm : public AForm
 		ShrubberyCreationForm&	operator = ( const ShrubberyCreationForm& other );
 		~ShrubberyCreationForm();
 		
-		void	execute( const Bureaucrat& ref );
-		void	formAction();
-		void	writeTrees( std::fstream fs );
+		void	execute( const Bureaucrate& ref ) const;
+		void	formAction() const;
+		void	writeAsciiTree( std::fstream& fs ) const;
 };
 
 #endif

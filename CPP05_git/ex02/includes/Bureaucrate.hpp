@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 10:22:02 by yachen            #+#    #+#             */
-/*   Updated: 2024/03/20 13:27:03 by yachen           ###   ########.fr       */
+/*   Updated: 2024/03/21 10:39:58 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 #include <exception>
 #include <string>
 
-class	Form;
+class	AForm;
 
 class	Bureaucrate
 {
@@ -67,7 +67,7 @@ class	Bureaucrate
 		void				incrementeGrade();
 		void				decrementeGrade();
 		void				signForm( AForm& ref );
-		void				executeForm(const AForm& form)
+		void				executeForm(const AForm& form);
 
 
 };

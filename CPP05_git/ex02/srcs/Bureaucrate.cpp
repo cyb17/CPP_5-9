@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 10:24:52 by yachen            #+#    #+#             */
-/*   Updated: 2024/03/20 13:34:56 by yachen           ###   ########.fr       */
+/*   Updated: 2024/03/21 11:37:05 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,8 +79,18 @@ void	Bureaucrate::signForm( AForm& ref )
 
 void	Bureaucrate::executeForm( const AForm& form )
 {
-	form.execute( *this );
-	// if (this->grade <= form.getReqSignGrade() && this->grade <= form.getReqExeGrade())
+	try
+	{
+		form.execute( *this );
+	}
+	catch (AForm::GradeTooHighException& e)
+	{
+		std::cout << RED << "Exception: " << e.what() << RESET << std::endl;
+	}
+	catch (AForm::GradeTooLowException& e)
+	{
+		std::cout << RED << "Exception: " << e.what() << RESET << std::endl;
+	}
 }
 
 std::ostream&	operator<<( std::ostream& os, const Bureaucrate& obj )

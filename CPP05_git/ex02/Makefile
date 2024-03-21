@@ -6,7 +6,7 @@
 #    By: yachen <yachen@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/25 14:21:49 by yachen            #+#    #+#              #
-#    Updated: 2024/03/19 15:11:28 by yachen           ###   ########.fr        #
+#    Updated: 2024/03/21 12:06:49 by yachen           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,9 @@ CC = c++
 
 CFLAGS = -std=c++98 -Wall -Wextra -Werror
 
-SRC = main.cpp Bureaucrate.cpp Form.cpp
+FILE_NAME =  main Bureaucrate ShrubberyCreationForm AForm RobotomyRequestForm PresidentialPardonForm
+
+SRC = $(addsuffix .cpp, $(addprefix srcs/, $(FILE_NAME)))
 
 OBJ = $(SRC:.cpp=.o)
 

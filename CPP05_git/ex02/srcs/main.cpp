@@ -6,65 +6,54 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 11:36:49 by yachen            #+#    #+#             */
-/*   Updated: 2024/03/20 11:09:59 by yachen           ###   ########.fr       */
+/*   Updated: 2024/03/21 12:07:45 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/Bureaucrate.hpp"
-#include "../include/Form.hpp"
+#include "../includes/Bureaucrate.hpp"
+#include "../includes/AForm.hpp"
+#include "../includes/ShrubberyCreationForm.hpp"
+#include "../includes/RobotomyRequestForm.hpp"
+#include "../includes/PresidentialPardonForm.hpp"
 
 int	main( void )
 {	
-	// try
-	// {
-	// 	Bureaucrate	Bob( "Bob", 5 );
-	// 	std::cout << Bob << std::endl;
-		
-	// 	Bureaucrate	Sam( Bob );
-	// 	std::cout << Sam << std::endl;
-		
-	// 	Bureaucrate	Alex( "Alex", 150 );
-	// 	Alex.decrementeGrade();
-	// 	std::cout << Alex << std::endl;
-
-	// }
-	// catch (Bureaucrate::GradeTooHighException& e)
-	// {
-	// 	std::cout << "Exception: " << e.what() << std::endl;
-	// }
-	// catch (Bureaucrate::GradeTooLowException& e)
-	// {
-	// 	std::cout << "Exception: " << e.what() << std::endl;
-	// }
-	
-	Bureaucrate	Sunny( "Sunny", 1 );
+	Bureaucrate	Sunny( "Sunny", 2 );
 	std::cout << Sunny << std::endl;
-		
+	
+	ShrubberyCreationForm	Home( "Home" );
+	Sunny.executeForm( Home );
+	
 	try
 	{
-		Form	form1( "form1", 1, 1);
-		std::cout << form1 << std::endl;
-		form1.beSigned( Sunny );
-		Sunny.signForm( form1 );
-		std::cout << form1 << std::endl;
-		
-		Form	copy( form1 );
-		std::cout << copy << std::endl;
-		
-		// Form	form2( "form2", -1, 1);
-		// Form	form2( "form2", 151, 1);
-		Form	form2( "form2", 5, 1);
-		std::cout << form2 << std::endl;
+		Bureaucrate	copieSunny( "copieSunny", 2 );
+		std::cout << copieSunny << std::endl;
 	}
-	catch (Form::GradeTooHighException& e)
-	{
-		std::cout << RED << "Exception: " << e.what() << RESET << std::endl;
-	}
-	catch (Form::GradeTooLowException& e)
-	{
-		std::cout << RED << "Exception: " << e.what() << RESET << std::endl;
-	}
-	std::cout << "End of program" << std::endl;
+	catch (Bureaucrate::GradeTooHighException& e)
+    {
+            std::cout << RED << "Exception: " << e.what() << RESET << std::endl;
+    }
+    catch (Bureaucrate::GradeTooLowException& e)
+    {
+            std::cout << RED << "Exception: " << e.what() << RESET << std::endl;
+    }
+	std::cout << YELLOW << "-----------------------------------------------------------------\n";
+
+	Bureaucrate	Robert( "Robert", 150 );
+	std::cout << Robert << std::endl;
 	
+	RobotomyRequestForm	Robot( "Robot" );
+	Robert.executeForm( Robot );
+	
+	std::cout << YELLOW << "-----------------------------------------------------------------\n";
+	
+	Bureaucrate	Somebody( "Somebody", 1 );
+	std::cout << Somebody << std::endl;
+	
+	PresidentialPardonForm	PresidentialPardonForm( "PresidentialPardonForm" );
+	Somebody.executeForm( PresidentialPardonForm );
+	
+	std::cout << "End of program" << std::endl;
+
 	return 0;
 }
