@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 14:11:38 by yachen            #+#    #+#             */
-/*   Updated: 2024/03/21 16:16:03 by yachen           ###   ########.fr       */
+/*   Updated: 2024/04/29 08:38:01 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ AForm*	Intern::makeForm( const std::string nm, const std::string target )
 	{
 		if (nm == str[i])
 		{
-			std::cout << GREEN << "Intern creates " << ptr[i]->getName() << RESET << std::endl;
+			std::cout << GREEN << "Intern creates " << ptr[i]->getName() << " target on " << ptr[i]->getTarget() << RESET << std::endl;
 			return ptr[i];
 		}
 	}

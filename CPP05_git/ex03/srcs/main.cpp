@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 11:36:49 by yachen            #+#    #+#             */
-/*   Updated: 2024/03/21 16:16:30 by yachen           ###   ########.fr       */
+/*   Updated: 2024/04/29 08:39:24 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int	main( void )
 	Intern	intern;
 	AForm*	tmp;
 	
-	tmp = intern.makeForm( "PresidentialPardonForm", "target" );
+	tmp = intern.makeForm( "PresidentialPardonForm", "Target" );
 	
 	std::cout << "End of program" << std::endl;
 
