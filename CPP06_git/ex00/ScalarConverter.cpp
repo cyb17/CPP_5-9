@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 11:28:22 by yachen            #+#    #+#             */
-/*   Updated: 2024/05/01 11:30:46 by yachen           ###   ########.fr       */
+/*   Updated: 2024/05/01 15:27:43 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,23 +136,54 @@ bool	IsDoubleLiteral( const std::string str )
 	return true;
 }
 
-#define CHAR 5
-#define INT	6
-#define	FLOAT 7
-#define	DOUBLE 8
-#define STRING 9
-
 void	ScalarConverter::Convert( std::string str )
 {
-	int	type = STRING;
-	
+	cout.setf(std::ios::fixed);
+	cout.precision(1);
 	if (IsCharLiteral(str))
-		type = CHAR;
+	{
+		cout << CYAN << "char: '" << static_cast<char>(str[0]) << "'" << endl;
+		cout << "int: " << static_cast<int>(str[0]) << endl;
+		cout << "float: " << static_cast<float>(str[0]) << "f" << endl;
+		cout << "double: " << static_cast<double>(str[0]) << RESET << endl;
+	}
 	else if (IsIntLiteral(str))
-		type = INT;
+	{
+		int	i = atoi(str.c_str());
+		if (i > 32 && i < 127)
+			cout << CYAN << "char: " << static_cast<char>(i) << endl;
+		else
+			cout << CYAN << "char: no displayable" << endl;
+		cout << "int: " << i << endl;
+		cout << "float: " << static_cast<float>(i) << "f" << endl;
+		cout << "double: " << static_cast<double>(i) << RESET << endl;
+	}
 	else if (IsFloatLiteral(str))
-		type = FLOAT;
+	{
+		float	f = strtof(str.c_str(), NULL);
+		
+		cout << CYAN << "char: impossible" << endl;
+		if ((str.compare("+inff") == 0) || (str.compare("-inff") == 0)
+		|| (str.compare("nanf") == 0))
+			cout << "int: impossible" << endl;
+		else
+			cout << "int: " << static_cast<int>(f) << endl;
+		cout << "float: " << f << "f" << endl;
+		cout << "double: " << static_cast<float>(f) << RESET << endl;
+	}
 	else if (IsDoubleLiteral(str))
-		type = DOUBLE;
-	
+	{
+		double	d = atof(str.c_str());
+		
+		cout << CYAN << "char: impossible" << endl;
+		if ((str.compare("+inf") == 0) || (str.compare("-inf") == 0)
+		|| (str.compare("nan") == 0))
+			cout << "int: impossible" << endl;
+		else
+			cout << "int: " << static_cast<int>(d) << endl;
+		cout << "float: " << static_cast<float>(d) << "f" << endl;
+		cout << "double: " << d << RESET << endl;
+	}
+	else
+		cout << RED <<  "The provided string cannot be converted\n" << RESET;
 }

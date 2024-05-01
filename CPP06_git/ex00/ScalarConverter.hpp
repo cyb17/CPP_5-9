@@ -6,18 +6,12 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 11:01:24 by yachen            #+#    #+#             */
-/*   Updated: 2024/05/01 11:17:54 by yachen           ###   ########.fr       */
+/*   Updated: 2024/05/01 15:45:04 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SCALAR_CONVERTER_HPP
 #define SCALAR_CONVERTER_HPP
-#define CHAR 5
-#define INT 6
-#define FLOAT 7
-#define DOUBLE 8
-#define NONE 9
-
 
 #include <string>
 #include "../color.h"

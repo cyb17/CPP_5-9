@@ -6,13 +6,12 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 09:53:27 by yachen            #+#    #+#             */
-/*   Updated: 2024/05/01 11:20:40 by yachen           ###   ########.fr       */
+/*   Updated: 2024/05/01 15:50:06 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <iostream>
 #include <string>
-#include <iterator>
 #include "ScalarConverter.hpp"
 
 int	main(int argc, char **argv)
@@ -20,9 +19,9 @@ int	main(int argc, char **argv)
 	if (argc > 2)
 		std::cout << RED << "You can only convert ONE string at time\n" << RESET;
 	else if (!argv[1])
-		std::cout << RED << "String to convert can't be NULL\n" << RESET;
+		std::cout << RED << "Cannot convert an NULL string.\n" << RESET;
 	else if (IsEmpty( argv[1] ))
-		std::cout << RED << "String to convert can't be EMPTY\n" << RESET;
+		std::cout << RED << "Cannot convert an EMPTY string.\n" << RESET;
 	else
 	{
 		std::string str( StrWithoutWhitespace( argv[1] ) );
@@ -32,19 +31,32 @@ int	main(int argc, char **argv)
 }
 
 
-// inputs : 
+// #!/bin/bash
 
-// null string
-// abcdfgdhj
-// fgjsdh678
-// ^&*(*)
-// 46738
-// 0.0f
-// 0.0
-// space
-// space42
+// # Liste des entrées de test
+// tests=(
+//     ""
+//     "   "
+//     "abcdfgdhj"
+//     "fgjsdh678"
+//     "^&*(*"
+//     "78.54gf"
+//     "a"
+//     "*"
+//     "8"
+//     "42"
+// 	"33"
+// 	"67"
+//     "2147483647"
+//     "-2147483649"
+//     "0f"
+//     "789.54f"
+//     "7895437.543"
+// )
 
-// literal type:
-
-// string -> impossible 
-// nb : 32-126 (char displayable)
+// # Exécuter le programme Convert pour chaque entrée de test
+// for input in "${tests[@]}"; do
+//     echo "Input: \"$input\""
+//     ./Convert "$input"
+//     echo "------------------"
+// done
