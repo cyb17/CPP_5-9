@@ -6,15 +6,18 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 11:28:22 by yachen            #+#    #+#             */
-/*   Updated: 2024/04/30 17:28:50 by yachen           ###   ########.fr       */
+/*   Updated: 2024/05/01 11:30:46 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ScalarConverter.hpp"
 #include <iostream>
+#include <cctype>
+#include <cstdlib>
+#include <climits>
 
-using std::cout
-using std::endl
+using std::cout;
+using std::endl;
 
 ScalarConverter::ScalarConverter()
 {
@@ -34,15 +37,17 @@ ScalarConverter::ScalarConverter( const ScalarConverter& other)
 
 ScalarConverter&	ScalarConverter::operator = ( const ScalarConverter& other )
 {
+	if ( this != &other )
+		*this = other;
 	cout << BLUE << "ScalarConverter : operator assignement called" << RESET << endl;
 	return *this;
 }
 
-bool	ScalarConverter::IsEmpty( const std::string& str ) const
+bool	IsEmpty( const std::string& str )
 {
 	if (str.empty())
 		return true;
-	for (int i = 0; i < str.length(); i++)
+	for (size_t i = 0; i < str.length(); i++)
 	{
 		if (str[i] != ' ' && str[i] != '\t')
 			return false;
@@ -50,14 +55,14 @@ bool	ScalarConverter::IsEmpty( const std::string& str ) const
 	return true;
 }
 
-bool	ScalarConverter::IsCharLiteral( const std::string& str ) const
+bool	IsCharLiteral( const std::string& str )
 {
-	if (str.length() > 1)
+	if (str.length() > 1 || isdigit(str[0]))
 		return false;
 	return true;
 }
 
-std::string	ScalarConverter::StrWithoutWhitespace( std::string str )
+std::string	StrWithoutWhitespace( std::string str )
 {
 	int	len = str.length();
 	int	start = 0;
@@ -69,9 +74,9 @@ std::string	ScalarConverter::StrWithoutWhitespace( std::string str )
 	return str.substr(start, end - start + 1);
 }
 
-bool	ScalarConverter::IsIntLiteral( const std::string& str ) const
+bool	IsIntLiteral( const std::string& str )
 {
-	int i = 0;
+	size_t i = 0;
 	if (str[i] == '-' || str[i] == '+')
 		i++;
 	for (; i < str.length(); i++)
@@ -85,9 +90,9 @@ bool	ScalarConverter::IsIntLiteral( const std::string& str ) const
 	return true;
 }
 
-bool	ScalarConverter::IsFloatLiteral( const std::string str ) const
+bool	IsFloatLiteral( const std::string str )
 {
-	int i = 0;
+	size_t i = 0;
 	int	f = 0;
 	int	point = 0;
 	if (str[i] == '-' || str[i] == '+')
@@ -110,9 +115,9 @@ bool	ScalarConverter::IsFloatLiteral( const std::string str ) const
 	return true;
 }
 
-bool	ScalarConverter::IsDoubleLiteral( const std::string str ) const
+bool	IsDoubleLiteral( const std::string str )
 {
-	int i = 0;
+	size_t i = 0;
 	int	point = 0;
 	if (str[i] == '-' || str[i] == '+')
 		i++;
@@ -131,7 +136,23 @@ bool	ScalarConverter::IsDoubleLiteral( const std::string str ) const
 	return true;
 }
 
-static void	ScalarConverter::Convert( std::string str )
+#define CHAR 5
+#define INT	6
+#define	FLOAT 7
+#define	DOUBLE 8
+#define STRING 9
+
+void	ScalarConverter::Convert( std::string str )
 {
+	int	type = STRING;
+	
+	if (IsCharLiteral(str))
+		type = CHAR;
+	else if (IsIntLiteral(str))
+		type = INT;
+	else if (IsFloatLiteral(str))
+		type = FLOAT;
+	else if (IsDoubleLiteral(str))
+		type = DOUBLE;
 	
 }

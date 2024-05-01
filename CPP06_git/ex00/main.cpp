@@ -6,21 +6,29 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 09:53:27 by yachen            #+#    #+#             */
-/*   Updated: 2024/04/30 17:20:24 by yachen           ###   ########.fr       */
+/*   Updated: 2024/05/01 11:20:40 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <iostream>
 #include <string>
 #include <iterator>
+#include "ScalarConverter.hpp"
 
-int	main()
+int	main(int argc, char **argv)
 {
-	double nb = 42;
-	// char	c = static_cast<char>(nb);
-	float	f = static_cast<float>(nb);
-	// double	d = static_cast<double>(nb);
-	std::cout << f << '\n';
+	if (argc > 2)
+		std::cout << RED << "You can only convert ONE string at time\n" << RESET;
+	else if (!argv[1])
+		std::cout << RED << "String to convert can't be NULL\n" << RESET;
+	else if (IsEmpty( argv[1] ))
+		std::cout << RED << "String to convert can't be EMPTY\n" << RESET;
+	else
+	{
+		std::string str( StrWithoutWhitespace( argv[1] ) );
+		ScalarConverter::Convert( str );
+	}
+	return 0;
 }
 
 
@@ -40,8 +48,3 @@ int	main()
 
 // string -> impossible 
 // nb : 32-126 (char displayable)
-
-#include <cctype>
-#include <cstdlib>
-#include <climits>
-
