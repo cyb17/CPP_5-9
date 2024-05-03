@@ -1,35 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Serializer.hpp                                     :+:      :+:    :+:   */
+/*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/01 15:54:26 by yachen            #+#    #+#             */
-/*   Updated: 2024/05/03 11:58:27 by yachen           ###   ########.fr       */
+/*   Created: 2024/05/03 11:40:30 by yachen            #+#    #+#             */
+/*   Updated: 2024/05/03 12:06:41 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SERIALIZER_HPP
-#define SERIALIZER_HPP
-
-#include "../color.h"
+#include "Serializer.hpp"
 #include "Data.hpp"
-#include <stdint.h>
+#include <iostream>
 
-class Serializer
+
+int	main( void )
 {
-	private:
+	Data	data( 42, '*' );
+	Data*	ptr = &data;
+	uintptr_t*	raw = Serializer::serialize( ptr );
 
-		Serializer();
-		Serializer( const Serializer& other );
-		Serializer&	operator= ( const Serializer& other );
-				
-	public:
+	std::cout << "int: " << raw->getI() << "\nchar: " << rwa;
+
+	Data*	ptr2 = Serializer::deserialize( raw );
 	
-		~Serializer();
-		static uintptr_t* serialize(Data* ptr);
-		static Data* deserialize(uintptr_t* raw);
-};
-
-#endif
+	std::cout << ptr2->getI() << '\n';
+	
+	return 0;
+}

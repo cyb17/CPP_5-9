@@ -6,7 +6,7 @@
 #    By: yachen <yachen@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/25 14:21:49 by yachen            #+#    #+#              #
-#    Updated: 2024/05/01 15:53:55 by yachen           ###   ########.fr        #
+#    Updated: 2024/05/03 12:00:41 by yachen           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ CC = c++
 
 CFLAGS = -std=c++98 -Wall -Wextra -Werror
 
-SRC = main.cpp ScalarConverter.cpp
+SRC = main.cpp Serializer.cpp Data.cpp
 
 OBJ = $(SRC:.cpp=.o)
 

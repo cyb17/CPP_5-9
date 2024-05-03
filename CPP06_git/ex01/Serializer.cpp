@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 15:58:47 by yachen            #+#    #+#             */
-/*   Updated: 2024/05/01 16:01:08 by yachen           ###   ########.fr       */
+/*   Updated: 2024/05/03 11:56:51 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,4 +38,14 @@ Serializer&	Serializer::operator = ( const Serializer& other )
 		*this = other;
 	cout << BLUE << "Serializer : operator assignement called" << RESET << endl;
 	return *this;
+}
+
+uintptr_t*	Serializer::serialize( Data* ptr )
+{
+	return reinterpret_cast<uintptr_t*>(ptr);
+}
+
+Data*	Serializer::deserialize(uintptr_t* raw)
+{
+	return reinterpret_cast<Data*>(raw);
 }
