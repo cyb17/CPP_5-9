@@ -1,36 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Data.hpp                                           :+:      :+:    :+:   */
+/*   A.hpp                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/03 11:31:45 by yachen            #+#    #+#             */
-/*   Updated: 2024/05/03 14:48:58 by yachen           ###   ########.fr       */
+/*   Created: 2024/05/03 15:13:30 by yachen            #+#    #+#             */
+/*   Updated: 2024/05/03 15:15:03 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef DATA_HPP
-#define DATA_HPP
+#ifndef A_HPP
+#define A_HPP
 
-#include "color.h"
+#include "Base.hpp"
 
-class	Data
+class	A : public Base
 {
-	private:
-
-		int		i;
-		char	c;
-
-	public:
-
-		Data( int i, char c );
-		Data( const Data& other );
-		Data&	operator= ( const Data& other );
-		~Data();
-		
-		int	getI() const;
-		char	getC() const;
+	
 };
 
 #endif

@@ -6,14 +6,14 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 15:54:26 by yachen            #+#    #+#             */
-/*   Updated: 2024/05/03 11:58:27 by yachen           ###   ########.fr       */
+/*   Updated: 2024/05/03 14:49:20 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SERIALIZER_HPP
 #define SERIALIZER_HPP
 
-#include "../color.h"
+#include "color.h"
 #include "Data.hpp"
 #include <stdint.h>
 

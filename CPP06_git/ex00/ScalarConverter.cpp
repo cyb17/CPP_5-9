@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 11:28:22 by yachen            #+#    #+#             */
-/*   Updated: 2024/05/01 15:27:43 by yachen           ###   ########.fr       */
+/*   Updated: 2024/05/03 14:42:22 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ ScalarConverter&	ScalarConverter::operator = ( const ScalarConverter& other )
 	return *this;
 }
 
-bool	IsEmpty( const std::string& str )
+bool	isEmpty( const std::string& str )
 {
 	if (str.empty())
 		return true;
@@ -55,14 +55,14 @@ bool	IsEmpty( const std::string& str )
 	return true;
 }
 
-bool	IsCharLiteral( const std::string& str )
+bool	isCharLiteral( const std::string& str )
 {
 	if (str.length() > 1 || isdigit(str[0]))
 		return false;
 	return true;
 }
 
-std::string	StrWithoutWhitespace( std::string str )
+std::string	strWithoutWhitespace( std::string str )
 {
 	int	len = str.length();
 	int	start = 0;
@@ -74,7 +74,7 @@ std::string	StrWithoutWhitespace( std::string str )
 	return str.substr(start, end - start + 1);
 }
 
-bool	IsIntLiteral( const std::string& str )
+bool	isIntLiteral( const std::string& str )
 {
 	size_t i = 0;
 	if (str[i] == '-' || str[i] == '+')
@@ -90,7 +90,7 @@ bool	IsIntLiteral( const std::string& str )
 	return true;
 }
 
-bool	IsFloatLiteral( const std::string str )
+bool	isFloatLiteral( const std::string str )
 {
 	size_t i = 0;
 	int	f = 0;
@@ -115,7 +115,7 @@ bool	IsFloatLiteral( const std::string str )
 	return true;
 }
 
-bool	IsDoubleLiteral( const std::string str )
+bool	isDoubleLiteral( const std::string str )
 {
 	size_t i = 0;
 	int	point = 0;
@@ -136,18 +136,18 @@ bool	IsDoubleLiteral( const std::string str )
 	return true;
 }
 
-void	ScalarConverter::Convert( std::string str )
+void	ScalarConverter::convert( std::string str )
 {
 	cout.setf(std::ios::fixed);
 	cout.precision(1);
-	if (IsCharLiteral(str))
+	if (isCharLiteral(str))
 	{
 		cout << CYAN << "char: '" << static_cast<char>(str[0]) << "'" << endl;
 		cout << "int: " << static_cast<int>(str[0]) << endl;
 		cout << "float: " << static_cast<float>(str[0]) << "f" << endl;
 		cout << "double: " << static_cast<double>(str[0]) << RESET << endl;
 	}
-	else if (IsIntLiteral(str))
+	else if (isIntLiteral(str))
 	{
 		int	i = atoi(str.c_str());
 		if (i > 32 && i < 127)
@@ -158,7 +158,7 @@ void	ScalarConverter::Convert( std::string str )
 		cout << "float: " << static_cast<float>(i) << "f" << endl;
 		cout << "double: " << static_cast<double>(i) << RESET << endl;
 	}
-	else if (IsFloatLiteral(str))
+	else if (isFloatLiteral(str))
 	{
 		float	f = strtof(str.c_str(), NULL);
 		
@@ -171,7 +171,7 @@ void	ScalarConverter::Convert( std::string str )
 		cout << "float: " << f << "f" << endl;
 		cout << "double: " << static_cast<float>(f) << RESET << endl;
 	}
-	else if (IsDoubleLiteral(str))
+	else if (isDoubleLiteral(str))
 	{
 		double	d = atof(str.c_str());
 		

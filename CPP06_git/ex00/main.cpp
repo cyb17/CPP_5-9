@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 09:53:27 by yachen            #+#    #+#             */
-/*   Updated: 2024/05/01 15:50:06 by yachen           ###   ########.fr       */
+/*   Updated: 2024/05/03 14:43:13 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,12 @@ int	main(int argc, char **argv)
 		std::cout << RED << "You can only convert ONE string at time\n" << RESET;
 	else if (!argv[1])
 		std::cout << RED << "Cannot convert an NULL string.\n" << RESET;
-	else if (IsEmpty( argv[1] ))
+	else if (isEmpty( argv[1] ))
 		std::cout << RED << "Cannot convert an EMPTY string.\n" << RESET;
 	else
 	{
-		std::string str( StrWithoutWhitespace( argv[1] ) );
-		ScalarConverter::Convert( str );
+		std::string str( strWithoutWhitespace( argv[1] ) );
+		ScalarConverter::convert( str );
 	}
 	return 0;
 }
