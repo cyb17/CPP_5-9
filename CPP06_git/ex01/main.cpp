@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 11:40:30 by yachen            #+#    #+#             */
-/*   Updated: 2024/05/03 14:37:27 by yachen           ###   ########.fr       */
+/*   Updated: 2024/05/06 15:05:45 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	main( void )
 	std::cout << std::hex << ptr << '\n';
 	
 	uintptr_t*	raw = Serializer::serialize( ptr );
-	std::cout << std::hex << raw << '\n';
+	std::cout << std::hex << raw << '\n' << std::dec;
 
 	Data*	ptr2 = Serializer::deserialize( raw );
 	std::cout << "int: " << ptr2->getI() << "\nchar: " << ptr2->getC() << '\n';

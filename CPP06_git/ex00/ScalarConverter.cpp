@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 11:28:22 by yachen            #+#    #+#             */
-/*   Updated: 2024/05/03 14:42:22 by yachen           ###   ########.fr       */
+/*   Updated: 2024/05/06 15:01:25 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,7 +151,7 @@ void	ScalarConverter::convert( std::string str )
 	{
 		int	i = atoi(str.c_str());
 		if (i > 32 && i < 127)
-			cout << CYAN << "char: " << static_cast<char>(i) << endl;
+			cout << CYAN << "char: '" << static_cast<char>(i) << "'" << endl;
 		else
 			cout << CYAN << "char: no displayable" << endl;
 		cout << "int: " << i << endl;
