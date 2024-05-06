@@ -6,22 +6,18 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 15:10:50 by yachen            #+#    #+#             */
-/*   Updated: 2024/05/03 17:18:28 by yachen           ###   ########.fr       */
+/*   Updated: 2024/05/06 13:34:38 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Base.hpp"
 #include <iostream>
 #include <cstdlib>
+#include <ctime>
 #include "A.hpp"
 #include "B.hpp"
 #include "C.hpp"
 #include "color.h"
-
-Base::Base()
-{
-	std::cout << BLUE << "Base: Default constructor called\n" << RESET;
-}
 
 Base::~Base()
 {
@@ -30,15 +26,18 @@ Base::~Base()
 
 Base*	generate()
 {
+	srand(time(NULL));
 	int	nb = rand() % 3;
-
 	switch (nb)
 	{
 		case 0:
+			std::cout << CYAN << "object A\n" << RESET;
 			return new A;
 		case 1:
+			std::cout << CYAN << "object B\n" << RESET;
 			return new B;
 		case 2:
+			std::cout << CYAN << "object C\n" << RESET;
 			return new C;
 	}
 	return NULL;
@@ -46,40 +45,42 @@ Base*	generate()
 
 void	identify( Base* p )
 {
+	std::cout << "Identify object type by pointer\n";
 	if (dynamic_cast<A*>(p) != NULL)
-        std::cout << "Type: A" << std::endl;
+        std::cout << BLUE << "Actual type: A" << RESET << std::endl;
 	else if (dynamic_cast<B*>(p) != NULL)
-        std::cout << "Type: B" << std::endl;
+        std::cout << BLUE << "Actual type: B" << RESET << std::endl;
     else if (dynamic_cast<C*>(p) != NULL)
-        std::cout << "Type: C" << std::endl;
+        std::cout << BLUE << "Actual type: C" << RESET << std::endl;
 	else
-        std::cout << "Unknown type" << std::endl;
+        std::cout << BLUE << "Unknown type" << RESET << std::endl;
 }
 
 void	identify( Base& p )
 {
+	std::cout << "Identify object type by reference\n";
 	try
 	{
-		dynamic_cast<A&>(p);
-        std::cout << "Type: A" << std::endl;
+		if (&dynamic_cast<A&>(p) != NULL)
+       		std::cout << BLUE << "Actual type: A" << RESET << std::endl;
 	}
-	catch (const std::bad_cast&)
+	catch (...)
 	{
 		try
 		{
-			dynamic_cast<B&>(p);
-        	std::cout << "Type: B" << std::endl;
+			if (&dynamic_cast<B&>(p) != NULL)
+				std::cout << BLUE << "Actual type: B" << RESET << std::endl;
 		}
-		catch (const std::bad_cast&)
+		catch (...)
 		{
 			try
 			{
-				dynamic_cast<C&>(p);
-		        std::cout << "Type: C" << std::endl;
+				if (&dynamic_cast<C&>(p) != NULL)
+					std::cout << BLUE << "Actual type: C" << RESET << std::endl;
 			}
-			catch (const std::bad_cast&)
+			catch (...)
 			{
-        		std::cout << "Unknown type" << std::endl;
+        		std::cout << BLUE << "Unknown type" << RESET << std::endl;
 			}	
 		}
 	}	
