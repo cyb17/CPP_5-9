@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 10:55:15 by yachen            #+#    #+#             */
-/*   Updated: 2024/05/07 14:03:48 by yachen           ###   ########.fr       */
+/*   Updated: 2024/05/07 17:29:37 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@ class	Array
 		~Array();
 
 		unsigned int	size() const;
-		T*				getElement() const;
+		// T*				getElementArray() const;
+		T				getElement( unsigned int i ) const;
 };
 
 #include "Array.tpp"

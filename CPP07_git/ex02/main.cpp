@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 13:33:42 by yachen            #+#    #+#             */
-/*   Updated: 2024/05/07 14:07:50 by yachen           ###   ########.fr       */
+/*   Updated: 2024/05/07 17:29:05 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,10 @@ int	main( void )
 	cout << arr1.size() << '\n';	
 	
 	Array<int>	arr2( 6 );
-	cout << arr2.size() << '\n';	
+	cout << arr2.size() << '\n';
+	cout << arr2.getElement( 5 ) << '\n';
 
-	int*	a = new int();
+	int*	a = new int(7);
 	cout << *a << '\n';
 
 	return 0;

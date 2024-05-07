@@ -6,12 +6,13 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 12:45:07 by yachen            #+#    #+#             */
-/*   Updated: 2024/05/07 14:06:43 by yachen           ###   ########.fr       */
+/*   Updated: 2024/05/07 18:12:32 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <iostream>
 #include "Array.hpp"
+#include <stdexcept>
 
 using std::cout;
 using std::endl;
@@ -29,8 +30,8 @@ Array<T>::Array( unsigned int n )
 {
 	arraySize = n;
 	element = new T[arraySize];
-	for (int i = 0; i < this->arraySize; i++)
-		this->element[i] = 0 ;
+	for (size_t i = 0; i < this->arraySize; i++)
+		this->element[i] = 0;
 	cout << BLUE << "Unsigned int constructor called\n" << RESET;
 }
 
@@ -39,8 +40,8 @@ Array<T>::Array( const Array<T>& other )
 {
 	this->arraySize =  other.size();
 	this->element = new  T[this->arraySize];
-	for (int i = 0; i < this->arraySize; i++)
-		this->element[i] = (other.getElement())[i];
+	for (size_t i = 0; i < this->arraySize; i++)
+		this->element[i] = other.getElement( i );
 	cout << BLUE << "Copy constructor called\n" << RESET;
 }
 
@@ -52,8 +53,8 @@ Array<T>&	Array<T>::operator= ( const Array<T>& other )
 		this->arraySize = other.size();
 		delete[] this->element;
 		this->element = new T[this->arraySize];
-		for (int i = 0; i < this->arraySize; i++)
-			this->element[i] = (other.getElement())[i];
+		for (size_t i = 0; i < this->arraySize; i++)
+			this->element[i] = other.getElement( i );
 	}
 	return *this;
 }
@@ -71,8 +72,19 @@ unsigned int	Array<T>::size() const
 	return this->arraySize;
 }
 
+// template<typename T>
+// T*	Array<T>::getElementArray() const
+// {
+// 	return element;
+// }
+
 template<typename T>
-T*	Array<T>::getElement() const
+T	Array<T>::getElement( unsigned int i ) const
 {
-	return element;
+	try
+	{
+		if ( i < 0 || i >= this->arraySize)
+			thrown
+		return this->element[i];
+	}
 }
