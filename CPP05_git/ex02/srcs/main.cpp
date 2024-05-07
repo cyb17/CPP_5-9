@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 11:36:49 by yachen            #+#    #+#             */
-/*   Updated: 2024/03/21 14:03:11 by yachen           ###   ########.fr       */
+/*   Updated: 2024/05/07 16:31:04 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,28 +18,17 @@
 
 int	main( void )
 {	
-	Bureaucrate	Sunny( "Sunny", 2 );
+	Bureaucrate	Sunny( "Sunny", 150 );
 	std::cout << Sunny << std::endl;
 	
 	ShrubberyCreationForm	form1( "Home" );
 	Sunny.executeForm( form1 );
 	
-	try
-	{
-		Bureaucrate	copieSunny( "copieSunny", 2 );
-		std::cout << copieSunny << std::endl;
-	}
-	catch (Bureaucrate::GradeTooHighException& e)
-    {
-            std::cout << RED << "Exception: " << e.what() << RESET << std::endl;
-    }
-    catch (Bureaucrate::GradeTooLowException& e)
-    {
-            std::cout << RED << "Exception: " << e.what() << RESET << std::endl;
-    }
+	Bureaucrate	copieSunny( Sunny );
+	std::cout << copieSunny << std::endl;
 	std::cout << YELLOW << "-----------------------------------------------------------------\n";
 
-	Bureaucrate	Robert( "Robert", 2 );
+	Bureaucrate	Robert( "Robert", 1 );
 	std::cout << Robert << std::endl;
 	
 	RobotomyRequestForm	form2( "Robot" );
@@ -54,6 +43,7 @@ int	main( void )
 	Somebody.executeForm( PresidentialPardonForm );
 	
 	std::cout << "End of program" << std::endl;
+	std::cout << YELLOW << "-----------------------------------------------------------------\n";
 
 	return 0;
 }

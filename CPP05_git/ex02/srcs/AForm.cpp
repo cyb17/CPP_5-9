@@ -15,16 +15,27 @@
 
 AForm::AForm( const std::string nm, const std::string target, const int signGrade, const int exeGrade ) : name( nm ), target( target ), reqSignGrade( signGrade ), reqExeGrade( exeGrade )
 {
-	if (signGrade < 1)
-		throw AForm::GradeTooHighException( this->name + ": sign grade initial is too high");
-	else if (signGrade > 150)
-		throw AForm::GradeTooLowException( this->name + ": sign grade initial is too low" );
-	else if (exeGrade < 1)
-		throw AForm::GradeTooHighException( this->name + ": execution grade initial is too high");
-	else if (exeGrade > 150)
-		throw AForm::GradeTooLowException( this->name + ": execution grade initial is too low" );
-	this->signStatus = 0;
 	std::cout << CYAN << this->name << " constructor called" << RESET << std::endl;	
+	try
+	{
+		if (signGrade < 1)
+			throw AForm::GradeTooHighException( this->name + ": initial sign grade is too high");
+		else if (signGrade > 150)
+			throw AForm::GradeTooLowException( this->name + ": initial sign grade is too low" );
+		else if (exeGrade < 1)
+			throw AForm::GradeTooHighException( this->name + ": initial execution grade is too high");
+		else if (exeGrade > 150)
+			throw AForm::GradeTooLowException( this->name + ": initial execution grade is too low" );
+		this->signStatus = 0;
+	}
+	catch (AForm::GradeTooHighException& e)
+	{
+		std::cout << RED << "Exception: " << e.what() << RESET << std::endl;
+	}
+	catch (AForm::GradeTooLowException& e)
+	{
+		std::cout << RED << "Exception: " << e.what() << RESET << std::endl;
+	}
 }
 
 AForm::AForm( const AForm& other ) : name( other.name ), reqSignGrade( other.reqSignGrade ), reqExeGrade( other.reqExeGrade )
@@ -73,13 +84,20 @@ int		AForm::getReqExeGrade() const
 
 void	AForm::beSigned( Bureaucrate& ref )
 {
-	if (ref.getGrade() <= this->reqSignGrade)
+	try
 	{
-		this->signStatus = true;
-		std::cout << GREEN << this->name << " is signed by " << ref.getName() << RESET << std::endl;
+		if (ref.getGrade() <= this->reqSignGrade)
+		{
+			this->signStatus = true;
+			std::cout << GREEN << this->name << " is signed by " << ref.getName() << RESET << std::endl;
+		}
+		else
+			throw AForm::GradeTooLowException( ref.getName() + "'grade is to low to sign " + this->name );
 	}
-	else
-		throw AForm::GradeTooLowException( ref.getName() + "'grade is to low to sign " + this->name );
+	catch (AForm::GradeTooLowException& e)
+	{
+		std::cout << RED << "Exception: " << e.what() << RESET << std::endl;
+	}
 }
 
 std::ostream&	operator<<( std::ostream& os, const AForm& obj )

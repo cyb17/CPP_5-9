@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 12:01:37 by yachen            #+#    #+#             */
-/*   Updated: 2024/03/21 13:59:23 by yachen           ###   ########.fr       */
+/*   Updated: 2024/05/07 16:41:04 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,15 @@ PresidentialPardonForm::~PresidentialPardonForm()
 
 void	PresidentialPardonForm::execute( const Bureaucrate& ref ) const
 {
-	if (ref.getGrade() <= this->getReqSignGrade() && ref.getGrade() <= this->getReqExeGrade())
-		std::cout << GREEN << this->getTarget() << " has been pardoned by Zaphod Beeblebrox. " << RESET << std::endl;
-	else
-		throw AForm::GradeTooLowException( ref.getName() + "'s grade is too low to execute " + this->getName() );
+	try
+	{
+		if (ref.getGrade() <= this->getReqSignGrade() && ref.getGrade() <= this->getReqExeGrade())
+			std::cout << GREEN << this->getTarget() << " has been pardoned by Zaphod Beeblebrox. " << RESET << std::endl;
+		else
+			throw AForm::GradeTooLowException( ref.getName() + "'s grade is too low to execute " + this->getName() );
+	}
+	catch (AForm::GradeTooLowException& e)
+	{
+		std::cout << RED << "Exception: " << e.what() << RESET << std::endl;
+	}
 }

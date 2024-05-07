@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 11:33:19 by yachen            #+#    #+#             */
-/*   Updated: 2024/03/21 13:54:51 by yachen           ###   ########.fr       */
+/*   Updated: 2024/05/07 16:26:51 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,17 @@ ShrubberyCreationForm::~ShrubberyCreationForm()
 
 void	ShrubberyCreationForm::execute( const Bureaucrate& ref ) const
 {
-	if (ref.getGrade() <= this->getReqSignGrade() && ref.getGrade() <= this->getReqExeGrade())
-		this->formAction();
-	else
-		throw AForm::GradeTooLowException( ref.getName() + "'s grade is too low to execute " + this->getName() );
+	try
+	{
+		if (ref.getGrade() <= this->getReqSignGrade() && ref.getGrade() <= this->getReqExeGrade())
+			this->formAction();
+		else
+			throw AForm::GradeTooLowException( ref.getName() + "'s grade is too low to execute " + this->getName() );
+	}
+	catch (AForm::GradeTooLowException& e)
+	{
+		std::cout << RED << "Exception: " << e.what() << RESET << std::endl;
+	}
 }
 
 void	ShrubberyCreationForm::formAction() const

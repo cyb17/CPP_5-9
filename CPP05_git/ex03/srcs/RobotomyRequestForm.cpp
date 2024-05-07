@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 11:48:56 by yachen            #+#    #+#             */
-/*   Updated: 2024/03/21 13:59:09 by yachen           ###   ########.fr       */
+/*   Updated: 2024/05/07 16:41:31 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,15 @@ RobotomyRequestForm::~RobotomyRequestForm()
 
 void	RobotomyRequestForm::execute( const Bureaucrate& ref ) const
 {
-	if (ref.getGrade() <= this->getReqSignGrade() && ref.getGrade() <= this->getReqExeGrade())
-		std::cout << GREEN << this->getTarget() << " has been robotomized successfully 50% of the time. " << RESET << std::endl;
-	else
-		throw AForm::GradeTooLowException( "Robotomy failed." );
+	try
+	{
+		if (ref.getGrade() <= this->getReqSignGrade() && ref.getGrade() <= this->getReqExeGrade())
+			std::cout << GREEN << this->getTarget() << " has been robotomized successfully 50% of the time. " << RESET << std::endl;
+		else
+			throw AForm::GradeTooLowException( "Robotomy failed." );
+	}
+	catch (AForm::GradeTooLowException& e)
+	{
+		std::cout << RED << "Exception: " << e.what() << RESET << std::endl;
+	}
 }
