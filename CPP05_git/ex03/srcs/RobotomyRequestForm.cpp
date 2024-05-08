@@ -6,11 +6,13 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 11:48:56 by yachen            #+#    #+#             */
-/*   Updated: 2024/05/07 16:41:31 by yachen           ###   ########.fr       */
+/*   Updated: 2024/05/08 13:24:10 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/RobotomyRequestForm.hpp"
+#include <ctime>
+#include <cstdlib>
 
 RobotomyRequestForm::RobotomyRequestForm( const std::string target ) : AForm( "RobotomyForm", target , 72 , 45)
 {
@@ -38,15 +40,17 @@ RobotomyRequestForm::~RobotomyRequestForm()
 
 void	RobotomyRequestForm::execute( const Bureaucrate& ref ) const
 {
-	try
+	if (this->getSignStatus() == 0)
+		throw AForm::GradeTooLowException( this->getName() + " is not signed, can not be executed " );
+	else if (ref.getGrade() > this->getReqExeGrade())
+		throw AForm::GradeTooLowException( ref.getName() + "'s grade is too low to execute " + this->getName() );
+	else
 	{
-		if (ref.getGrade() <= this->getReqSignGrade() && ref.getGrade() <= this->getReqExeGrade())
+		srand(time(NULL));
+		int nb = rand() % 2;
+		if (nb == 0)
 			std::cout << GREEN << this->getTarget() << " has been robotomized successfully 50% of the time. " << RESET << std::endl;
 		else
-			throw AForm::GradeTooLowException( "Robotomy failed." );
-	}
-	catch (AForm::GradeTooLowException& e)
-	{
-		std::cout << RED << "Exception: " << e.what() << RESET << std::endl;
+			std::cout << GREEN << "Robotomy failed." << RESET << std::endl;
 	}
 }

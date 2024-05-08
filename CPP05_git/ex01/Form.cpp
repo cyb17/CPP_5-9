@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 15:20:29 by yachen            #+#    #+#             */
-/*   Updated: 2024/05/07 15:57:28 by yachen           ###   ########.fr       */
+/*   Updated: 2024/05/08 12:42:29 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,27 +15,16 @@
 
 Form::Form( const std::string nm, const int signGrade, const int exeGrade ) : name( nm ), reqSignGrade( signGrade ), reqExeGrade( exeGrade )
 {
+	if (signGrade < 1)
+		throw Form::GradeTooHighException( this->name + ": initial sign grade is too high");
+	else if (signGrade > 150)
+		throw Form::GradeTooLowException( this->name + ": initial sign grade is too low" );
+	else if (exeGrade < 1)
+		throw Form::GradeTooHighException( this->name + ": initial execution grade is too high");
+	else if (exeGrade > 150)
+		throw Form::GradeTooLowException( this->name + ": initial execution grade is too low" );
+	this->signStatus = 0;
 	std::cout << CYAN << this->name << " constructor called" << RESET << std::endl;	
-	try
-	{
-		if (signGrade < 1)
-			throw Form::GradeTooHighException( this->name + ": initial sign grade is too high");
-		else if (signGrade > 150)
-			throw Form::GradeTooLowException( this->name + ": initial sign grade is too low" );
-		else if (exeGrade < 1)
-			throw Form::GradeTooHighException( this->name + ": initial execution grade is too high");
-		else if (exeGrade > 150)
-			throw Form::GradeTooLowException( this->name + ": initial execution grade is too low" );
-		this->signStatus = 0;
-	}
-	catch (Form::GradeTooHighException& e)
-	{
-		std::cout << RED << "Exception: " << e.what() << RESET << std::endl;
-	}
-	catch (Form::GradeTooLowException& e)
-	{
-		std::cout << RED << "Exception: " << e.what() << RESET << std::endl;
-	}
 }
 
 Form::Form( const Form& other ) : name( other.name ), reqSignGrade( other.reqSignGrade ), reqExeGrade( other.reqExeGrade )
@@ -79,20 +68,13 @@ int		Form::getReqExeGrade() const
 
 void	Form::beSigned( Bureaucrate& ref )
 {
-	try
+	if (ref.getGrade() <= this->reqSignGrade)
 	{
-		if (ref.getGrade() <= this->reqSignGrade)
-		{
-			this->signStatus = true;
-			std::cout << GREEN << this->name << " is signed by " << ref.getName() << RESET << std::endl;
-		}
-		else
-			throw Form::GradeTooLowException( ref.getName() + "'grade is to low to sign " + this->name );
+		this->signStatus = true;
+		std::cout << GREEN << this->name << " is signed by " << ref.getName() << RESET << std::endl;
 	}
-	catch (Form::GradeTooLowException& e)
-	{
-		std::cout << RED << "Exception: " << e.what() << RESET << std::endl;
-	}
+	else
+		throw Form::GradeTooLowException( ref.getName() + "'grade is to low to sign " + this->name );
 }
 
 std::ostream&	operator<<( std::ostream& os, const Form& obj )

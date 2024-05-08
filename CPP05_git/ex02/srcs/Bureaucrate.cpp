@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 10:24:52 by yachen            #+#    #+#             */
-/*   Updated: 2024/05/07 16:21:43 by yachen           ###   ########.fr       */
+/*   Updated: 2024/05/08 13:09:18 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,23 +15,12 @@
 
 Bureaucrate::Bureaucrate( const std::string nm, int gd ) : name( nm )
 {
+	if (gd < 1)
+		throw Bureaucrate::GradeTooHighException( this->name + ": grade initial is too high");
+	else if (gd > 150)
+		throw Bureaucrate::GradeTooLowException( this->name + ": grade initial is too low" );
+	this->grade = gd;
 	std::cout << CYAN << this->name << " constructor called" << RESET << std::endl;	
-	try
-	{
-		if (gd < 1)
-			throw Bureaucrate::GradeTooHighException( this->name + ": initial grade is too high");
-		else if (gd > 150)
-			throw Bureaucrate::GradeTooLowException( this->name + ": initial grade is too low" );
-		this->grade = gd;
-	}
-	catch (Bureaucrate::GradeTooHighException& e)
-	{
-		std::cout << RED << "Exception: " << e.what() << std::endl;
-	}
-	catch (Bureaucrate::GradeTooLowException& e)
-	{
-		std::cout << RED << "Exception: " << e.what() << std::endl;
-	}
 }
 
 Bureaucrate::Bureaucrate( const Bureaucrate& other ) : name( other.name )
@@ -65,57 +54,33 @@ int	Bureaucrate::getGrade() const
 
 void	Bureaucrate::incrementeGrade()
 {
-	try
-	{
-		if (this->grade == 1)
-			throw Bureaucrate::GradeTooHighException( this->name + ": can not incremente, grade will be too high" );
-		this->grade--;
-	}
-	catch (Bureaucrate::GradeTooHighException& e)
-	{
-		std::cout << RED << "Exception: " << e.what() << std::endl;
-	}
+	if (this->grade == 1)
+		throw Bureaucrate::GradeTooHighException( this->name + ": can not incremente, grade will be too high" );
+	this->grade--;
 }
 
 void	Bureaucrate::decrementeGrade()
 {
-	try
-	{
-		if (this->grade == 150)
-			throw Bureaucrate::GradeTooLowException( this->name + ": can not decremente, grade will be too low" );
-		this->grade++;
-	}
-	catch (Bureaucrate::GradeTooLowException& e)
-	{
-		std::cout << RED << "Exception: " << e.what() << std::endl;
-	}
+	if (this->grade == 150)
+		throw Bureaucrate::GradeTooLowException( this->name + ": can not decremente, grade will be too low" );
+	this->grade++;
 }
 
 void	Bureaucrate::signForm( AForm& ref )
 {
 	if (this->grade <= ref.getReqSignGrade())
-		std::cout << GREEN << this->name << " signed " << ref.getName() << RESET << std::endl;
-	else
 	{
-		std::cout << RED << this->name << " couldn't sign " << ref.getName() << " because ";
-		std::cout << this->name << "'s grade is too low " << RESET << std::endl;
-	} 
+		ref.beSigned( *this );
+		std::cout << GREEN << this->name << " signed " << ref.getName() << RESET << std::endl;
+	}
+	else
+		throw Bureaucrate::GradeTooLowException( this->getName() + " could not sign " + ref.getName() + " because " + this->getName() + "'grade is to low" );
 }
 
 void	Bureaucrate::executeForm( const AForm& form )
 {
-	try
-	{
-		form.execute( *this );
-	}
-	catch (AForm::GradeTooHighException& e)
-	{
-		std::cout << RED << "Exception: " << e.what() << RESET << std::endl;
-	}
-	catch (AForm::GradeTooLowException& e)
-	{
-		std::cout << RED << "Exception: " << e.what() << RESET << std::endl;
-	}
+	form.execute( *this );
+	std::cout << GREEN << this->getName() << " executed " << form.getName() << RESET << std::endl;
 }
 
 std::ostream&	operator<<( std::ostream& os, const Bureaucrate& obj )

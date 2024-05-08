@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 14:11:38 by yachen            #+#    #+#             */
-/*   Updated: 2024/04/29 08:38:01 by yachen           ###   ########.fr       */
+/*   Updated: 2024/05/08 13:38:44 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ Intern&	Intern::operator = ( const Intern& other )
 {
 	std::cout << CYAN << "assignation operator called" << RESET << std::endl;
 	if (this == &other)
-		return (*this);
+		return *this;
 	return *this;
 }
 
