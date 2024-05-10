@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 10:24:52 by yachen            #+#    #+#             */
-/*   Updated: 2024/05/08 12:42:57 by yachen           ###   ########.fr       */
+/*   Updated: 2024/05/10 17:24:04 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ void	Bureaucrate::incrementeGrade()
 	if (this->grade == 1)
 		throw Bureaucrate::GradeTooHighException( this->name + ": can not incremente, grade will be too high" );
 	this->grade--;
+	std::cout << GREEN << "Grade decremented with succes !" << RESET << std::endl;
 }
 
 void	Bureaucrate::decrementeGrade()
@@ -64,6 +65,7 @@ void	Bureaucrate::decrementeGrade()
 	if (this->grade == 150)
 		throw Bureaucrate::GradeTooLowException( this->name + ": can not decremente, grade will be too low" );
 	this->grade++;
+	std::cout << GREEN << "Grade incremented with succes !" << RESET << std::endl;
 }
 
 void	Bureaucrate::signForm( Form& ref )

@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 10:22:02 by yachen            #+#    #+#             */
-/*   Updated: 2024/03/19 15:02:33 by yachen           ###   ########.fr       */
+/*   Updated: 2024/05/10 17:01:36 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@
 #define MAGENTA "\e[35m"
 #define CYAN "\e[36m"
 #define WHITE "\e[37m"
+#define YELLOW "\e[33m"
+#define GREEN "\e[32m"
 
 #include <iostream>
 #include <exception>
