@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 11:28:22 by yachen            #+#    #+#             */
-/*   Updated: 2024/05/06 15:01:25 by yachen           ###   ########.fr       */
+/*   Updated: 2024/05/11 18:27:57 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,10 @@ bool	isIntLiteral( const std::string& str )
 	}
 	const char* cstr = str.c_str();
 	if (atol(cstr) > INT_MAX || atol(cstr) < INT_MIN)
+	{
+		cout << RED << "The provide string is a number, but it exceeded the limit of an int." << RESET << endl;
 		return false;
+	}
 	return true;
 }
 
