@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 12:45:07 by yachen            #+#    #+#             */
-/*   Updated: 2024/05/07 18:12:32 by yachen           ###   ########.fr       */
+/*   Updated: 2024/05/13 17:55:21 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ Array<T>::Array()
 {
 	element = NULL;
 	arraySize = 0;
-	cout << BLUE << "Default constructor called\n" << RESET;
+	cout << "Default constructor called\n";
 }
 
 template<typename T>
@@ -30,9 +30,9 @@ Array<T>::Array( unsigned int n )
 {
 	arraySize = n;
 	element = new T[arraySize];
-	for (size_t i = 0; i < this->arraySize; i++)
-		this->element[i] = 0;
-	cout << BLUE << "Unsigned int constructor called\n" << RESET;
+	for(unsigned int i = 0; i < n; i++)
+		element[i] = 0;
+	cout << "Unsigned int constructor called\n";
 }
 
 template<typename T>
@@ -41,7 +41,7 @@ Array<T>::Array( const Array<T>& other )
 	this->arraySize =  other.size();
 	this->element = new  T[this->arraySize];
 	for (size_t i = 0; i < this->arraySize; i++)
-		this->element[i] = other.getElement( i );
+		this->element[i] = other[i];
 	cout << BLUE << "Copy constructor called\n" << RESET;
 }
 
@@ -54,7 +54,7 @@ Array<T>&	Array<T>::operator= ( const Array<T>& other )
 		delete[] this->element;
 		this->element = new T[this->arraySize];
 		for (size_t i = 0; i < this->arraySize; i++)
-			this->element[i] = other.getElement( i );
+			this->element[i] = other[i];
 	}
 	return *this;
 }
@@ -63,28 +63,19 @@ template<typename T>
 Array<T>::~Array()
 {
 	delete[] element;
-	cout << MAGENTA << "Default destructor called\n" << RESET;
+	cout << "Default destructor called\n";
+}
+
+template<typename T>
+T	Array<T>::operator[] (unsigned int i) const
+{
+	if (i >= arraySize)
+		throw std::out_of_range("The provided indice is out of range");
+	return element[i];
 }
 
 template<typename T>
 unsigned int	Array<T>::size() const
 {
 	return this->arraySize;
-}
-
-// template<typename T>
-// T*	Array<T>::getElementArray() const
-// {
-// 	return element;
-// }
-
-template<typename T>
-T	Array<T>::getElement( unsigned int i ) const
-{
-	try
-	{
-		if ( i < 0 || i >= this->arraySize)
-			thrown
-		return this->element[i];
-	}
 }

@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 10:55:15 by yachen            #+#    #+#             */
-/*   Updated: 2024/05/07 17:29:37 by yachen           ###   ########.fr       */
+/*   Updated: 2024/05/13 17:07:22 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 #define BLUE "\e[34m"
 #define MAGENTA "\e[35m"
+#define RED "\e[31m"
 #define RESET "\e[0m"
 
 template<typename T>
@@ -33,9 +34,9 @@ class	Array
 		Array&	operator= ( const Array<T>& other );
 		~Array();
 
+		T	operator[] ( unsigned int i ) const;
+		
 		unsigned int	size() const;
-		// T*				getElementArray() const;
-		T				getElement( unsigned int i ) const;
 };
 
 #include "Array.tpp"
