@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 15:54:26 by yachen            #+#    #+#             */
-/*   Updated: 2024/05/03 14:49:20 by yachen           ###   ########.fr       */
+/*   Updated: 2024/05/13 14:55:49 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ class Serializer
 	public:
 	
 		~Serializer();
-		static uintptr_t* serialize(Data* ptr);
-		static Data* deserialize(uintptr_t* raw);
+		static uintptr_t* serialize( Data* ptr );
+		static Data* deserialize( uintptr_t* raw );
 };
 
 #endif
