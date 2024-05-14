@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 16:12:47 by yachen            #+#    #+#             */
-/*   Updated: 2024/05/14 18:53:06 by yachen           ###   ########.fr       */
+/*   Updated: 2024/05/14 19:24:00 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,13 @@ int	 main()
 	std::vector<int> v(arr, arr + sizeof(arr) / sizeof(arr[0]));
 	cout << "Test: create Vector with values : ";
 	printContainerValue( v );
-	cout << "Use easyfind : " << BLUE << easyfind( v, val ) << endl << RESET;
-	
+	try
+	{
+		cout << "Use easyfind : " << BLUE << easyfind( v, val ) << endl << RESET;
+	}
+	catch(const std::invalid_argument& e)
+	{
+		cout << "Error: " << e.what() << endl;
+	}
 	return 0;
 }
