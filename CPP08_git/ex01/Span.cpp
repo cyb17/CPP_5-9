@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 10:08:32 by yachen            #+#    #+#             */
-/*   Updated: 2024/05/16 16:09:32 by yachen           ###   ########.fr       */
+/*   Updated: 2024/05/16 20:15:57 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@
 using std::cout;
 using std::endl;
 
-Span::Span( unsigned int n ) : sizeMax( n ), shorted( 0 ), longest( 0 ) {}
+Span::Span( unsigned int n ) : sizeMax( n ), shortest( 0 ), longest( 0 ) {}
 
-Span::Span( const Span& other ) : sizeMax( other.sizeMax ), shorted( other.shorted ), longest( other.longest )
+Span::Span( const Span& other ) : sizeMax( other.sizeMax ), shortest( other.shortest ), longest( other.longest )
 {
 	std::deque<int>::const_iterator it;
 	for (it = other.monSpan.begin(); it != other.monSpan.end(); it++)
@@ -52,23 +52,22 @@ std::deque<int>	Span::getMonSpan() const
 	return monSpan;
 }
 
-int	Span::shortedSpan()
+int	Span::shortestSpan()
 {
 	if (monSpan.empty())
-		throw std::logic_error("the span is actually empty, can not calculate shorted distance.");
+		throw std::logic_error("the span is actually empty, can not calculate shortest distance.");
 	else if (monSpan.size() == 1)
-		throw std::logic_error("the span actual has just 1 element, can not calculate shorted distance.");
+		throw std::logic_error("the span actual has just 1 element, can not calculate shortest distance.");
 	std::deque<int>	sortedSpan( monSpan );
 	std::sort( sortedSpan.begin(), sortedSpan.end() );
 	std::deque<int>::const_iterator it = sortedSpan.begin();
-	shorted = *(it + 1) - *it;
+	shortest = *(it + 1) - *it;
 	for (; it != sortedSpan.end() - 1; ++it)
 	{
-		if (*(it + 1) - *it < shorted)
-			shorted = *(it + 1) - *it;
+		if (*(it + 1) - *it < shortest)
+			shortest = *(it + 1) - *it;
 	}
-	// cout << "val : " << *it << "\tnext val : " << *it + 1 << "\tshorted : " << shorted;
-	return shorted;
+	return shortest;
 }
 
 int	Span::longestSpan()
@@ -79,13 +78,7 @@ int	Span::longestSpan()
 		throw std::logic_error("the span actual has just 1 element, can not calculate longest distance.");
 	std::deque<int>	sortedSpan( monSpan );
 	std::sort( sortedSpan.begin(), sortedSpan.end() );
-	std::deque<int>::const_iterator it = sortedSpan.begin();
-	longest = *(it + 1) - *it;
-	for (; it != sortedSpan.end() - 1; ++it)
-	{
-		if (*(it + 1) - *it > longest)
-			longest = *(it + 1) - *it;
-	}
+	longest = *(sortedSpan.end() - 1) -  *(sortedSpan.begin());
 	return longest;
 }
 
@@ -94,6 +87,13 @@ void	Span::addLotNumber( unsigned int n )
 	for (unsigned int i = 0; i < n; i++)
 	{
 		srand(time(NULL) + i);
-		addNumber(random() % 100);
+		addNumber(random() % 10000);
 	}		
+}
+
+void	printContainerValue( std::deque<int> container )
+{
+	for(std::deque<int>::iterator it = container.begin(); it != container.end(); it++)
+		std::cout << BLUE << *it << ' ';
+	std::cout << '\n' << RESET;
 }

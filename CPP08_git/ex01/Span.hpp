@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 15:21:07 by yachen            #+#    #+#             */
-/*   Updated: 2024/05/16 13:45:44 by yachen           ###   ########.fr       */
+/*   Updated: 2024/05/16 17:56:54 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ class	Span
 
 		unsigned int	sizeMax;
 		std::deque<int> monSpan;
-		int				shorted;
+		int				shortest;
 		int				longest;
 
 	public:
@@ -40,10 +40,12 @@ class	Span
 
 		void			addNumber( int const nb );
 		std::deque<int>	getMonSpan() const;
-		int				shortedSpan();
+		int				shortestSpan();
 		int				longestSpan();
 		void			addLotNumber( unsigned int n );
 
 };
+
+void	printContainerValue( std::deque<int> container );
 
 #endif

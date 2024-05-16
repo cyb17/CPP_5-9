@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 10:35:48 by yachen            #+#    #+#             */
-/*   Updated: 2024/05/16 16:09:03 by yachen           ###   ########.fr       */
+/*   Updated: 2024/05/16 20:16:13 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,29 +15,29 @@
 using std::cout;
 using std::endl;
 
-void	printContainerValue( std::deque<int> container )
-{
-	for(std::deque<int>::iterator it = container.begin(); it != container.end(); it++)
-		std::cout << BLUE << *it << ' ';
-	std::cout << '\n' << RESET;
-}
-
 int	main()
 {
 	cout << YELLOW << "-----------------------------\n" << RESET;
-	unsigned int nMax = 100;
+	unsigned int nMax = 10000;
 	cout << "n = " << nMax << ", create a Span sp\n";
 	Span	sp( nMax );
 	cout << "Add elements to sp: \n";
 	try
 	{
-		sp.addLotNumber( 100 );
+		sp.addNumber(1);
+		sp.addNumber(2);
+		sp.addNumber(10);
+		sp.addNumber(1000);
+		sp.addNumber(16789);
+		sp.addNumber(999);
+
+		// sp.addLotNumber( 0 );
 	}
 	catch(std::out_of_range& e)
 	{
 		cout << RED << "Error: " << e.what() << '\n';
 	}
-	// printContainerValue( sp.getMonSpan() );
+	printContainerValue( sp.getMonSpan() );
 	
 	// cout << YELLOW << "-----------------------------\n" << RESET;
 	// cout << "Create a sp copy, print it's elements :\n";
@@ -54,7 +54,7 @@ int	main()
 	cout << YELLOW << "-----------------------------\n" << RESET;
 	try
 	{
-		cout << "Find shorted span in sp : " << sp.shortedSpan() << '\n';
+		cout << "Find shortest span in sp : " << sp.shortestSpan() << '\n';
 	}
 	catch(std::logic_error& e)
 	{
@@ -73,3 +73,17 @@ int	main()
 	
 	return 0;
 }
+
+// int main()
+// {
+// 	Span sp = Span(5);
+// 	sp.addNumber(6);
+// 	sp.addNumber(3);
+// 	sp.addNumber(17);
+// 	sp.addNumber(9);
+// 	sp.addNumber(11);
+// 	std::cout << sp.shortestSpan() << std::endl;
+// 	std::cout << sp.longestSpan() << std::endl;
+	
+// 	return 0;
+// }
