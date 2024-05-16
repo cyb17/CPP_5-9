@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 17:33:03 by yachen            #+#    #+#             */
-/*   Updated: 2024/05/06 18:15:07 by yachen           ###   ########.fr       */
+/*   Updated: 2024/05/16 18:25:25 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 
 #include <iostream>
 
-template<typename T>
-void	iter( T* array, int len, void (*f)(T&) )
+template<typename T, typename F>
+void	iter( T* array, int len, F f)
 {
 	for(int	i = 0; i < len; i++)
 		f(array[i]);
