@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 10:35:48 by yachen            #+#    #+#             */
-/*   Updated: 2024/05/16 13:46:20 by yachen           ###   ########.fr       */
+/*   Updated: 2024/05/16 16:09:03 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,31 +25,31 @@ void	printContainerValue( std::deque<int> container )
 int	main()
 {
 	cout << YELLOW << "-----------------------------\n" << RESET;
-	unsigned int nMax = 10;
+	unsigned int nMax = 100;
 	cout << "n = " << nMax << ", create a Span sp\n";
 	Span	sp( nMax );
 	cout << "Add elements to sp: \n";
 	try
 	{
-		sp.addLotNumber( 7 );
+		sp.addLotNumber( 100 );
 	}
 	catch(std::out_of_range& e)
 	{
 		cout << RED << "Error: " << e.what() << '\n';
 	}
-	printContainerValue( sp.getMonSpan() );
+	// printContainerValue( sp.getMonSpan() );
 	
-	cout << YELLOW << "-----------------------------\n" << RESET;
-	cout << "Create a sp copy, print it's elements :\n";
-	Span	spCopy(sp);
-	printContainerValue( spCopy.getMonSpan() );
+	// cout << YELLOW << "-----------------------------\n" << RESET;
+	// cout << "Create a sp copy, print it's elements :\n";
+	// Span	spCopy(sp);
+	// printContainerValue( spCopy.getMonSpan() );
 	
-	cout << YELLOW << "-----------------------------\n" << RESET;
-	cout << "Creat a otherSp : otherSp = sp\n";
-	Span	otherSp( 2 );
-	otherSp = sp;	
-	cout << "print it's elements : \n";
-	printContainerValue( otherSp.getMonSpan() );
+	// cout << YELLOW << "-----------------------------\n" << RESET;
+	// cout << "Creat a otherSp : otherSp = sp\n";
+	// Span	otherSp( 2 );
+	// otherSp = sp;	
+	// cout << "print it's elements : \n";
+	// printContainerValue( otherSp.getMonSpan() );
 	
 	cout << YELLOW << "-----------------------------\n" << RESET;
 	try

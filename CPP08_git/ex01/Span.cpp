@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 10:08:32 by yachen            #+#    #+#             */
-/*   Updated: 2024/05/16 13:49:54 by yachen           ###   ########.fr       */
+/*   Updated: 2024/05/16 16:09:32 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,15 +58,16 @@ int	Span::shortedSpan()
 		throw std::logic_error("the span is actually empty, can not calculate shorted distance.");
 	else if (monSpan.size() == 1)
 		throw std::logic_error("the span actual has just 1 element, can not calculate shorted distance.");
-	for (std::deque<int>::const_iterator i = monSpan.begin(); i != monSpan.end() - 2; i++)
+	std::deque<int>	sortedSpan( monSpan );
+	std::sort( sortedSpan.begin(), sortedSpan.end() );
+	std::deque<int>::const_iterator it = sortedSpan.begin();
+	shorted = *(it + 1) - *it;
+	for (; it != sortedSpan.end() - 1; ++it)
 	{
-		shorted = abs(*i - *(i + 1));
-		for (std::deque<int>::const_iterator j = i + 1; j != monSpan.end() - 1; j++)
-		{
-			if (abs(*i - *j) < shorted)
-				shorted = *i - *j;
-		}
+		if (*(it + 1) - *it < shorted)
+			shorted = *(it + 1) - *it;
 	}
+	// cout << "val : " << *it << "\tnext val : " << *it + 1 << "\tshorted : " << shorted;
 	return shorted;
 }
 
@@ -76,14 +77,14 @@ int	Span::longestSpan()
 		throw std::logic_error("the span is actually empty, can not calculate longest distance.");
 	else if (monSpan.size() == 1)
 		throw std::logic_error("the span actual has just 1 element, can not calculate longest distance.");
-	for (std::deque<int>::const_iterator i = monSpan.begin(); i != monSpan.end() - 2; i++)
+	std::deque<int>	sortedSpan( monSpan );
+	std::sort( sortedSpan.begin(), sortedSpan.end() );
+	std::deque<int>::const_iterator it = sortedSpan.begin();
+	longest = *(it + 1) - *it;
+	for (; it != sortedSpan.end() - 1; ++it)
 	{
-		longest = abs(*i - *(i + 1));
-		for (std::deque<int>::const_iterator j = i + 1; j != monSpan.end() - 1; j++)
-		{
-			if (abs(*i - *j) > longest)
-				longest = *i - *j;
-		}
+		if (*(it + 1) - *it > longest)
+			longest = *(it + 1) - *it;
 	}
 	return longest;
 }
