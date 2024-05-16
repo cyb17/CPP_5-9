@@ -6,7 +6,7 @@
 #    By: yachen <yachen@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/25 14:21:49 by yachen            #+#    #+#              #
-#    Updated: 2024/05/15 15:18:47 by yachen           ###   ########.fr        #
+#    Updated: 2024/05/16 10:56:49 by yachen           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ CC = c++
 
 CFLAGS = -std=c++98 -Wall -Wextra -Werror
 
-SRC = main.cpp
+SRC = main.cpp Span.cpp
 
 OBJ = $(SRC:.cpp=.o)
 

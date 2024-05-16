@@ -6,21 +6,30 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 15:21:07 by yachen            #+#    #+#             */
-/*   Updated: 2024/05/15 15:33:25 by yachen           ###   ########.fr       */
+/*   Updated: 2024/05/16 13:45:44 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SPAN_H
 #define SPAN_H
 
-#include <vector>
+#include <deque>
 #include <algorithm>
+#include <iostream>
+#define RESET "\e[0m"
+#define BLUE "\e[34m"
+#define RED "\e[31m"
+#define YELLOW "\e[33m"
+#define GREEN "\e[32m"
 
 class	Span
 {
 	private:
 
-		std::vector monSpan;
+		unsigned int	sizeMax;
+		std::deque<int> monSpan;
+		int				shorted;
+		int				longest;
 
 	public:
 
@@ -29,7 +38,12 @@ class	Span
 		Span&	operator=( const Span& other );
 		~Span();
 
-		void	addNumber( int const nb );
+		void			addNumber( int const nb );
+		std::deque<int>	getMonSpan() const;
+		int				shortedSpan();
+		int				longestSpan();
+		void			addLotNumber( unsigned int n );
+
 };
 
 #endif
