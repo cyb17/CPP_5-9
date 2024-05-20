@@ -6,7 +6,7 @@
 #    By: yachen <yachen@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/25 14:21:49 by yachen            #+#    #+#              #
-#    Updated: 2024/05/16 17:58:48 by yachen           ###   ########.fr        #
+#    Updated: 2024/05/20 10:57:41 by yachen           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ CC = c++
 
 CFLAGS = -std=c++98 -Wall -Wextra -Werror
 
-SRC = main.cpp MutantStack.cpp
+SRC = main.cpp 
 
 OBJ = $(SRC:.cpp=.o)
 
