@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 09:53:27 by yachen            #+#    #+#             */
-/*   Updated: 2024/05/03 14:43:13 by yachen           ###   ########.fr       */
+/*   Updated: 2024/05/21 17:14:12 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,8 @@ int	main(int argc, char **argv)
 //     "0f"
 //     "789.54f"
 //     "7895437.543"
+//		"43.0f";
+//		"42.789"
 // )
 
 // # Exécuter le programme Convert pour chaque entrée de test

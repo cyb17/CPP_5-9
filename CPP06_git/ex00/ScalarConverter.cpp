@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 11:28:22 by yachen            #+#    #+#             */
-/*   Updated: 2024/05/11 18:27:57 by yachen           ###   ########.fr       */
+/*   Updated: 2024/05/21 17:12:03 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,12 +165,18 @@ void	ScalarConverter::convert( std::string str )
 	{
 		float	f = strtof(str.c_str(), NULL);
 		
-		cout << CYAN << "char: impossible" << endl;
 		if ((str.compare("+inff") == 0) || (str.compare("-inff") == 0)
 		|| (str.compare("nanf") == 0))
-			cout << "int: impossible" << endl;
+			cout << CYAN << "char: impossible\n" << "int: impossible" << endl;
 		else
+		{
+			int	nb = static_cast<int>(f);
+			if (nb > 32 && nb < 127)
+				cout << CYAN << "char: '" << static_cast<char>(nb) << "'" << endl;
+			else
+				cout << CYAN << "char: impossible\n";
 			cout << "int: " << static_cast<int>(f) << endl;
+		}
 		cout << "float: " << f << "f" << endl;
 		cout << "double: " << static_cast<float>(f) << RESET << endl;
 	}
@@ -178,12 +184,18 @@ void	ScalarConverter::convert( std::string str )
 	{
 		double	d = atof(str.c_str());
 		
-		cout << CYAN << "char: impossible" << endl;
 		if ((str.compare("+inf") == 0) || (str.compare("-inf") == 0)
 		|| (str.compare("nan") == 0))
-			cout << "int: impossible" << endl;
+			cout << CYAN << "char: impossible\n" << "int: impossible" << endl;
 		else
+		{
+			int	nb = static_cast<int>(d);
+			if (nb > 32 && nb < 127)
+				cout << CYAN << "char: '" << static_cast<char>(nb) << "'" << endl;
+			else
+				cout << CYAN << "char: impossible\n";
 			cout << "int: " << static_cast<int>(d) << endl;
+		}
 		cout << "float: " << static_cast<float>(d) << "f" << endl;
 		cout << "double: " << d << RESET << endl;
 	}
