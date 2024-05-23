@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 16:16:42 by yachen            #+#    #+#             */
-/*   Updated: 2024/05/21 17:30:58 by yachen           ###   ########.fr       */
+/*   Updated: 2024/05/23 17:23:55 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ class	BitcoinExchange
 	private:
 		
 		std::map<std::string, float>	bitcoinPrice;
-		// std::string						line;
 
 	public:
 
@@ -37,9 +36,6 @@ class	BitcoinExchange
 		BitcoinExchange&	operator=( const BitcoinExchange& other );
 		
 		void	readDataFile();
-		void	fillBitcoinPrice();
-		void	checkLine() const;
-		void	exchangeBitcoin();
 		
 };
 

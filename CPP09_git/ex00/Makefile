@@ -6,7 +6,7 @@
 #    By: yachen <yachen@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/25 14:21:49 by yachen            #+#    #+#              #
-#    Updated: 2024/05/20 16:55:36 by yachen           ###   ########.fr        #
+#    Updated: 2024/05/23 17:58:04 by yachen           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,11 +16,15 @@ CC = c++
 
 CFLAGS = -std=c++98 -Wall -Wextra -Werror
 
-SRC = main.cpp BitcoinExchanged.cpp
+OBJ_DIR = obj
 
-OBJ = $(SRC:.cpp=.o)
+SRC_DIR = src/
 
-DEPS = $(OBJ:.o=.d)
+SRC = teste.cpp
+
+OBJ = $(SRC:%.cpp=$(OBJ_DIR)/%.o)
+
+DEPS = $(OBJ:%.o=%.d)
 
 all: $(NAME)
 
@@ -31,20 +35,23 @@ $(NAME): $(OBJ)
 		@echo "\e[32m---created with success  btc"
 		@echo "\e[32m===================================\n\e[0m"
 
-%.o: %.cpp
+$(OBJ_DIR)/%.o: %.cpp | $(OBJ_DIR)
 	@$(CC) $(CFLAGS) -MMD -c $< -o $@
+
+$(OBJ_DIR):
+	@mkdir -p $(OBJ_DIR)
 
 clean:
 	@echo "\e[32m\n====================="
 	@echo "\e[32mCleanin btc----"
-	@rm -rf $(OBJ) $(DEPS)
+	@rm -rf $(OBJ_DIR)
 	@echo "\e[32m--- btc Cleaned"
 	@echo "\e[32m=====================\n\e[0m"
 
 fclean:
 	@echo "\e[32m\n====================="
 	@echo "\e[32mCleanin btc----"
-	@rm -rf $(OBJ) $(DEPS)
+	@rm -rf $(OBJ_DIR)
 	@echo "\e[32m--- btc Cleaned"
 	@rm -rf $(NAME)
 	@echo "\e[32m=====================\n\e[0m"
