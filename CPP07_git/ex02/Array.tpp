@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 12:45:07 by yachen            #+#    #+#             */
-/*   Updated: 2024/05/13 17:55:21 by yachen           ###   ########.fr       */
+/*   Updated: 2024/05/23 15:25:13 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ Array<T>::Array( const Array<T>& other )
 	this->element = new  T[this->arraySize];
 	for (size_t i = 0; i < this->arraySize; i++)
 		this->element[i] = other[i];
-	cout << BLUE << "Copy constructor called\n" << RESET;
+	cout << "Copy constructor called\n";
 }
 
 template<typename T>
@@ -67,7 +67,15 @@ Array<T>::~Array()
 }
 
 template<typename T>
-T	Array<T>::operator[] (unsigned int i) const
+T&	Array<T>::operator[] (unsigned int i)
+{
+	if (i >= arraySize)
+		throw std::out_of_range("The provided indice is out of range");
+	return element[i];
+}
+
+template<typename T>
+T&	Array<T>::operator[] (unsigned int i) const
 {
 	if (i >= arraySize)
 		throw std::out_of_range("The provided indice is out of range");
