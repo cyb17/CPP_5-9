@@ -6,7 +6,7 @@
 #    By: yachen <yachen@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/25 14:21:49 by yachen            #+#    #+#              #
-#    Updated: 2024/05/23 17:58:04 by yachen           ###   ########.fr        #
+#    Updated: 2024/05/24 12:28:15 by yachen           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ OBJ_DIR = obj
 
 SRC_DIR = src/
 
-SRC = teste.cpp
+SRC = main.cpp BitcoinExchange.cpp
 
 OBJ = $(SRC:%.cpp=$(OBJ_DIR)/%.o)
 

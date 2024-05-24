@@ -7,15 +7,21 @@
 
 int	checkDataSyntaxe( std::ifstream& ifsr )
 {
-	std::string	year;
-	std::string	month;
-	std::string	day;
-	std::string	price;
-	std::getline(ifsr, year, '-');
-	std::getline(ifsr, month, '-');
-	std::getline(ifsr, day, ',');
-	std::getline(ifsr, price);
-	std::cout << year + month + day + price << "\n";
+	int	year;
+	int	month;
+	int	day;
+	int	price;
+	std::string	line;
+
+	while (std::getline( ifsr, line ))
+	{
+		std::cout << line << '\n';
+		line.getline(year, '-');
+		line.getline(month, '-');
+		line.getline(day, ',');
+		line.getline(day);
+		line.clear();
+	}
 
 	return 0;
 }
