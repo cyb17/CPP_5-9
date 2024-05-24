@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 10:55:15 by yachen            #+#    #+#             */
-/*   Updated: 2024/05/23 15:25:02 by yachen           ###   ########.fr       */
+/*   Updated: 2024/05/24 18:09:39 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ class	Array
 		~Array();
 
 		T&	operator[] ( unsigned int i );
-		T&	operator[] ( unsigned int i ) const;
+		const T&	operator[] ( unsigned int i ) const;
 
 		unsigned int	size() const;
 };

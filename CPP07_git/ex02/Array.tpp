@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 12:45:07 by yachen            #+#    #+#             */
-/*   Updated: 2024/05/23 15:25:13 by yachen           ###   ########.fr       */
+/*   Updated: 2024/05/24 18:09:48 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ T&	Array<T>::operator[] (unsigned int i)
 }
 
 template<typename T>
-T&	Array<T>::operator[] (unsigned int i) const
+const T&	Array<T>::operator[] (unsigned int i) const
 {
 	if (i >= arraySize)
 		throw std::out_of_range("The provided indice is out of range");
