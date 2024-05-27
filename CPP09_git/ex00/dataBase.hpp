@@ -1,23 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.cpp                                           :+:      :+:    :+:   */
+/*   dataBase.hpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/24 12:26:37 by yachen            #+#    #+#             */
-/*   Updated: 2024/05/27 13:22:07 by yachen           ###   ########.fr       */
+/*   Created: 2024/05/27 16:41:13 by yachen            #+#    #+#             */
+/*   Updated: 2024/05/27 18:01:10 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "BitcoinExchange.hpp"
+#ifndef DATA_BASE_HPP
+#define DATA_BASE_HPP
 
-int	main()
+#include <fstream>
+
+class	dataBase
 {
-	BitcoinExchange	bitcoin;
+	private:
 	
-	bitcoin.readFile();
-	// bitcoin.analyzeFileContent();
-	
-	return 0;
-}
+		std::ifstream	ifs;
+		
+	public:
+
+		dataBase();
+		dataBase( const dataBase& other );
+		~dataBase();
+		
+		dataBase&	operator=( const dataBase& other );
+
+		void	checkFileContent();
+		
+		bool	isValidDate();
+		bool	isValidPrice();
+		bool	isValidValue();
+};
+
+
+#endif

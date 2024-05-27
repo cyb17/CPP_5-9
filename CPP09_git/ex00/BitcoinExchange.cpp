@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 12:06:49 by yachen            #+#    #+#             */
-/*   Updated: 2024/05/24 17:56:30 by yachen           ###   ########.fr       */
+/*   Updated: 2024/05/27 13:44:38 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ BitcoinExchange&	BitcoinExchange::operator= ( const BitcoinExchange& other )
 
 void	BitcoinExchange::readFile()
 {
-	std::ifstream	ifs( "tete/correctFile" );
+	std::ifstream	ifs( "teste/directory" );
 	if (!ifs.is_open())
 	{
 		std::cerr << RED << "Open data file failed\n" << DEF;
@@ -40,41 +40,46 @@ void	BitcoinExchange::readFile()
 		exit(EXIT_FAILURE);
 	}
 	std::string					line;
-	int							i = 0;
 	while (std::getline(ifs, line))
 	{
-		// _fileContent[i++] = line;
-		// line.clear();
-		int	comma = line.find( ',' );
-		isValidDate( line.substr( 0, comma ));
+		size_t	comma = line.find( ',' );
+		if (comma == std::string::npos || !isValidDate( line.substr( 0, comma )))
+		{
+			std::cerr << RED << "Invalid content in data file\n" << DEF;
+			BitcoinExchange::~BitcoinExchange();
+			ifs.close();
+			exit(EXIT_FAILURE);
+		}
+		// isValidPrice( line.substr(comma + 1) );
+		line.clear();
 	}
 	ifs.close();
 }
 
-bool	BitcoinExchange::isValidPrice( std::string price )
-{
-	if (price.find_first_not_of( "0123456789." ) != std::string::npos)
-		return false;
-	int	point = price.find('.', 0);
-	if (point == std::string::npos)
-	{
-		//check la valeur 
-	}
-	else
-	{
-		if (price.find_first_of('.'))
-		if (point == 0 || point == price.length() - 1)
-		return false;
-	}
-}
+// bool	BitcoinExchange::isValidPrice( std::string price )
+// {
+// 	if (price.find_first_not_of( "0123456789." ) != std::string::npos)
+// 		return false;
+// 	int	pointPosition = price.find_first_of('.', 0);
+// 	if (point == std::string::npos)
+// 	{
+// 		//check la valeur 
+// 	}
+// 	else
+// 	{
+// 		if (pointPosition != price.find_last_of('.', 0)
+// 			|| pointPosition == 0 || pointPosition == price.length() - 1)
+// 			return false;
+// 	}
+// }
 
-bool	BitcoinExchange::isValidDate( std::string& date )
+bool	BitcoinExchange::isValidDate( std::string date )
 {
 	if (date.length() != 10)
 		return false;
 	if (date[4] != '-' || date[7] != '-' || date[10] != ',')
 		return false;
-	for (int i = 0; i < date.length(); i++)
+	for (size_t i = 0; i < date.length(); i++)
 	{
 		if ((date[i] < '0' || date[i] > '9') && i != 4 && i != 7 && i != 10)
 			return false;
