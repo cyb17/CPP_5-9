@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   easyfind.hpp                                       :+:      :+:    :+:   */
+/*   easyFind.hpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:44:04 by yachen            #+#    #+#             */
-/*   Updated: 2024/05/15 14:28:14 by yachen           ###   ########.fr       */
+/*   Updated: 2024/05/27 11:00:48 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ template<typename T> void	printContainerValue( T& container )
 	std::cout << '\n' << RESET;
 }
 
-template<typename T> typename T::iterator	easyfind( T& container, int const val )
+template<typename T> typename T::iterator	easyFind( T& container, int val )
 {
 	typename T::iterator it = find( container.begin(), container.end(), val );
 	if (it != container.end())

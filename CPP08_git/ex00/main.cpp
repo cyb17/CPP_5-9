@@ -6,11 +6,11 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 16:12:47 by yachen            #+#    #+#             */
-/*   Updated: 2024/05/15 14:29:06 by yachen           ###   ########.fr       */
+/*   Updated: 2024/05/27 10:56:41 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "easyfind.hpp"
+#include "easyFind.hpp"
 
 using std::cout;
 using std::endl;
@@ -27,7 +27,7 @@ int	 main()
 	printContainerValue( v );
 	try
 	{
-		cout << "Use easyfind : " << BLUE << *easyfind( v, val )  << " : Occurrence found\n" << endl << RESET;
+		cout << "Use easyFind : " << BLUE << *easyFind( v, val )  << " : Occurrence found\n" << endl << RESET;
 	}
 	catch(const std::invalid_argument& e)
 	{
@@ -39,7 +39,7 @@ int	 main()
 	printContainerValue( l );
 	try
 	{
-		cout << "Use easyfind : " << BLUE << *easyfind( l, val )  << " : Occurrence found\n" << endl << RESET;
+		cout << "Use easyFind : " << BLUE << *easyFind( l, val )  << " : Occurrence found\n" << endl << RESET;
 	}
 	catch(const std::invalid_argument& e)
 	{
@@ -51,7 +51,7 @@ int	 main()
 	printContainerValue( d );
 	try
 	{
-		cout << "Use easyfind : " << BLUE << *easyfind( d, val )  << " : Occurrence found\n" << endl << RESET;
+		cout << "Use easyFind : " << BLUE << *easyFind( d, val )  << " : Occurrence found\n" << endl << RESET;
 	}
 	catch(const std::invalid_argument& e)
 	{
