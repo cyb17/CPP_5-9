@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 12:06:49 by yachen            #+#    #+#             */
-/*   Updated: 2024/05/27 13:44:38 by yachen           ###   ########.fr       */
+/*   Updated: 2024/05/28 19:07:38 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,24 @@
 #include <iterator>
 using std::cout;
 
-BitcoinExchange::BitcoinExchange() {cout << "cs\n";}
+BitcoinExchange::BitcoinExchange( const std::string path ) : _path( path )
+{
+	cout << "cs\n";
+	if (!isValidPath())
+		exitProgram( "Invalid data file path" );
+	_dataFile.open( _path.c_str() );
+	if (!_dataFile.is_open())
+		exitProgram( "Open data file failed" );
+}
 
 BitcoinExchange::BitcoinExchange( const BitcoinExchange& other ) : _bitcoinPrice( other._bitcoinPrice ) {}
 
-BitcoinExchange::~BitcoinExchange() {cout << "ds\n";}
+BitcoinExchange::~BitcoinExchange()
+{
+	if (_dataFile.is_open())
+		_dataFile.close();
+	cout << "ds\n";
+}
 
 BitcoinExchange&	BitcoinExchange::operator= ( const BitcoinExchange& other )
 {
@@ -32,28 +45,94 @@ BitcoinExchange&	BitcoinExchange::operator= ( const BitcoinExchange& other )
 
 void	BitcoinExchange::readFile()
 {
-	std::ifstream	ifs( "teste/directory" );
-	if (!ifs.is_open())
-	{
-		std::cerr << RED << "Open data file failed\n" << DEF;
-		BitcoinExchange::~BitcoinExchange();
-		exit(EXIT_FAILURE);
-	}
-	std::string					line;
-	while (std::getline(ifs, line))
+	std::string	line;
+	std::getline(_dataFile, line);
+	if (_dataFile.fail() || _dataFile.eof())	//check if is a file not a directory, check if file is empty.
+		exitProgram( "Read data file failed" );
+	if (line.compare( "date,exchange_rate" ) == 0)
+		std::getline(_dataFile, line);	
+	while (!line.empty())
 	{
 		size_t	comma = line.find( ',' );
 		if (comma == std::string::npos || !isValidDate( line.substr( 0, comma )))
 		{
-			std::cerr << RED << "Invalid content in data file\n" << DEF;
-			BitcoinExchange::~BitcoinExchange();
-			ifs.close();
-			exit(EXIT_FAILURE);
+			cout << line.substr( 0,comma ) << '\n';
+			exitProgram( "Invalid content format in data file" );
 		}
 		// isValidPrice( line.substr(comma + 1) );
 		line.clear();
+		std::getline(_dataFile, line);
 	}
-	ifs.close();
+}
+
+void	BitcoinExchange::exitProgram( const char* errMsg )
+{
+	std::cerr << RED << errMsg << DEF << std::endl;
+	BitcoinExchange::~BitcoinExchange();
+	exit(EXIT_FAILURE);
+}
+
+bool	BitcoinExchange::isValidPath()
+{
+	int	len = _path.length();
+	if (len < 4 || (len == 4 && _path.compare( ".csv" ) != 0)
+		|| _path.substr(len - 4) != ".csv")
+		return false;
+	return true;
+}
+
+bool	BitcoinExchange::isValidDate( std::string date )
+{
+	if (date.length() != 10)
+	{
+		cout << "1\n";
+		return false;
+	}
+	if (date[4] != '-' || date[7] != '-')
+	{
+		cout << "2\n";
+		return false;
+	}
+	for (size_t i = 0; i < date.length(); i++)
+	{
+		if ((date[i] < '0' || date[i] > '9') && i != 4 && i != 7 && i != 10)
+		{
+			cout << "3\n";
+			return false;
+		}
+	}
+	std::string	years = date.substr( 0, 4 );
+	std::string	month = date.substr( 5, 2 );
+	std::string	day = date.substr( 8, 2 );
+	int	y = atoi( years.c_str() );
+	int	m = atoi( month.c_str() );
+	int	d = atoi( day.c_str() );
+	if (y < 2009 || y > 2024 || m < 1 || m > 12 || d > 31)
+	{
+		cout << "4\n";
+		return false;
+	}
+	if (y == 2009 && m == 1 && d < 3) // the bitcoin network was created on 3/01/2009.
+	{
+		cout << "5\n";
+		return false;
+	}
+	if ((m == 4 || m == 6 || m == 9 || m == 11) && d > 30)
+	{
+		cout << "6\n";
+		return false;
+	}
+	if (m == 2 && y % 400 != 0 && d > 28)
+	{
+		cout << "7\n";
+		return false;
+	}
+	if (m == 2 && y % 400 == 0 && d > 29) // leap year(annee bissextile) had 366days (29days on february).
+	{
+		cout << "8\n";
+		return false;
+	}
+	return true;
 }
 
 // bool	BitcoinExchange::isValidPrice( std::string price )
@@ -73,35 +152,6 @@ void	BitcoinExchange::readFile()
 // 	}
 // }
 
-bool	BitcoinExchange::isValidDate( std::string date )
-{
-	if (date.length() != 10)
-		return false;
-	if (date[4] != '-' || date[7] != '-' || date[10] != ',')
-		return false;
-	for (size_t i = 0; i < date.length(); i++)
-	{
-		if ((date[i] < '0' || date[i] > '9') && i != 4 && i != 7 && i != 10)
-			return false;
-	}
-	std::string	years = date.substr( 0, 4 );
-	std::string	month = date.substr( 5, 2 );
-	std::string	day = date.substr( 8, 2 );
-	int	y = atoi( years.c_str() );
-	int	m = atoi( month.c_str() );
-	int	d = atoi( day.c_str() );
-	if (y < 2009 || y > 2024 || m < 1 || m > 12 || d > 31)
-		return false;
-	if (y == 2009 && d < 3) // the bitcoin network was created on 3/01/2009.
-		return false;
-	if ((m == 4 || m == 6 || m == 9 || m == 11) && d > 30)
-		return false;
-	if (m == 2 && y % 400 != 0 && d > 28)
-		return false;
-	if (m == 2 && y % 400 == 0 && d > 29) // leap year(annee bissextile) had 366days (29days on february).
-		return false;
-	return true;
-}
 
 // void	BitcoinExchange::analyzeFileContent()
 // {
