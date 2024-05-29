@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 11:59:59 by yachen            #+#    #+#             */
-/*   Updated: 2024/05/28 18:24:29 by yachen           ###   ########.fr       */
+/*   Updated: 2024/05/29 13:02:12 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,9 @@ class	BitcoinExchange
 	
 		std::string						_path;
 		std::ifstream					_dataFile;
-		// std::ifstream					_inputFile;
 		std::map<std::string, double>	_bitcoinPrice;
-		// std::string						_date;
-		// std::string						_price;
+		// std::ifstream					_inputFile;
+		double							_price;
 
 		
 	public:
@@ -42,15 +41,13 @@ class	BitcoinExchange
 
 		BitcoinExchange&	operator=( const BitcoinExchange& other );
 
-		void	readFile();
-		void	CheckDataFile();
-		void	CheckInputFile();
+		void	readDataFile();
 		void	exitProgram( const char* errMsg );
 		bool	isValidPath();
 		bool	isValidDate( std::string date );
-		bool	isValidPrice( std::string& price );
+		bool	isValidPrice( std::string price );
+		
 		bool	isValidValue( std::string& value );
-		bool	addDateAndPrice();
 		void	exchangeBitcoin();
 };
 
