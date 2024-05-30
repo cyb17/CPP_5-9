@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 12:06:49 by yachen            #+#    #+#             */
-/*   Updated: 2024/05/30 16:13:08 by yachen           ###   ########.fr       */
+/*   Updated: 2024/05/30 17:26:28 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 #include <sstream>
 using std::cout;
 
-BitcoinExchange::BitcoinExchange( const char* price, const char* input ) : _price( 0 ), _priceFilePath( price ), _inputFilePath( input )
+BitcoinExchange::BitcoinExchange( const char* price, const char* input ) : _price( 0.0 ), _priceFilePath( price ), _inputFilePath( input )
 {
 	if (!isValidDataFilePath( _priceFilePath ))
 		throw std::invalid_argument( "price file path not valid" );
@@ -72,8 +72,11 @@ void	BitcoinExchange::readDataFile()
 		std::string date = line.substr( 0, comma );
 		std::string price = line.substr( comma + 1 );
 		
+		// cout << "line : "  << line << " | " << "_date: " << date  << " | " << "_price: " <<  price << '\n';
 		if (comma == std::string::npos || !isValidDate( date ) || !isValidPrice( price ))
 			throw std::invalid_argument( "invalid content in price data file" );
+		// cout << "   line : "  << line << " | " << "_date: " << date  << " | " << "_price: " <<  price << '\n';
+		// cout << BLUE << "   	line : "  << line << " | " << "_date: " << date  << " | " << "_price: " <<  _price << '\n'<<DEF;
 		std::pair<std::map<std::string, double>::iterator, bool> result = _bitcoinPrice.insert( std::pair<std::string, double>(date, _price) );
 		if (!result.second)
 			throw std::invalid_argument( "insert new price failed, key already exist" );	// result is a obj not a pointer, it stock return value of _bitcoinPrice.insert().
@@ -142,7 +145,7 @@ bool	BitcoinExchange::openFiles()
 	return true;
 }
 
-void	BitcoinExchange::checkValue( std::string& value )
+void	BitcoinExchange::checkValue(  const std::string& value )
 {
 	int		start = 0;
 	if (value[0] == '+')
@@ -186,18 +189,19 @@ void	BitcoinExchange::printExchangedBitcoin( const std::string date, const std::
 			throw std::invalid_argument( "no valid date before => " + date );	
 		--it;
 	}
+	// cout << "price" << it->second << '\n';
 	rslt *= it->second;
 	cout << GREEN << date + " => " + value + " = " << rslt << DEF << std::endl;
 }
 
-bool	BitcoinExchange::isBissextile( int& year )
+bool	BitcoinExchange::isBissextile( const int& year )
 {
 	if ((year % 4 != 0) || (year % 4 == 0 && year % 100 == 0 && year % 400 != 0 ))
 		return false;
 	return true;
 }
 
-bool	BitcoinExchange::isValidDate( std::string& date )
+bool	BitcoinExchange::isValidDate( const std::string& date )
 {
 	if (date.length() != 10 || date[4] != '-' || date[7] != '-')		// check '-' position
 		return false;
@@ -225,15 +229,17 @@ bool	BitcoinExchange::isValidDate( std::string& date )
 	return false;
 }
 
-bool	BitcoinExchange::isValidPrice( std::string& price )
+bool	BitcoinExchange::isValidPrice( const std::string& price )
 {
 	if (price.find_first_not_of( "0123456789." ) != std::string::npos)
 		return false;
 	size_t	pointPosition = price.find_first_of('.');					// check if there is only 1 point.
 	if (pointPosition != std::string::npos && pointPosition != price.find_last_of( '.' ))
 		return false;
+	cout << "string: " << price << '\n'; 
 	std::stringstream	ss( price );									// check if price is not bigger than double_max. 
 	ss >> _price;
+	cout << "_price: " << _price << '\n'; 
 	if (ss.fail())
 		return false;
 	return true;

@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 12:26:37 by yachen            #+#    #+#             */
-/*   Updated: 2024/05/30 13:45:53 by yachen           ###   ########.fr       */
+/*   Updated: 2024/05/30 16:23:18 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,5 @@ int	main(int argc, char** argv)
 	{
 		std::cerr << RED << "Error: " << e.what() << std::endl << DEF;
 	}
-	
 	return 0;
 }

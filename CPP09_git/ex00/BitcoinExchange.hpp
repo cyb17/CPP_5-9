@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 11:59:59 by yachen            #+#    #+#             */
-/*   Updated: 2024/05/30 15:11:33 by yachen           ###   ########.fr       */
+/*   Updated: 2024/05/30 17:17:06 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,10 @@ class	BitcoinExchange
 		std::map<std::string, double>	_bitcoinPrice;
 
 		bool	openFiles();
-		bool	isValidDate( std::string& date );
-		bool	isValidPrice( std::string& price );
-		bool	isBissextile( int& year );
-		void	checkValue( std::string& value );
+		bool	isValidDate( const std::string& date );
+		bool	isValidPrice( const std::string& price );
+		bool	isBissextile( const int& year );
+		void	checkValue( const std::string& value );
 		bool	isValidDataFilePath( const char*& priceFilePath );
 		void	printExchangedBitcoin( const std::string date, const std::string& value );
 		
