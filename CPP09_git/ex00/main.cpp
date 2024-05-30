@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 12:26:37 by yachen            #+#    #+#             */
-/*   Updated: 2024/05/29 18:19:36 by yachen           ###   ########.fr       */
+/*   Updated: 2024/05/30 13:45:53 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,19 @@ int	main(int argc, char** argv)
 {
 	if (argc != 2)
 	{
-		std::cerr << RED << "Invalid program parameter\n";
+		std::cerr << RED << "Error: invalid program parameter\n" << DEF;
 		exit(EXIT_FAILURE);
 	}
-	BitcoinExchange	bitcoin( "./teste/.csv", argv[1] );
-	bitcoin.readDataFile();
-	bitcoin.readInputFile();
+	try
+	{
+		BitcoinExchange	bitcoin( "./teste/data.csv", argv[1] );
+		bitcoin.readDataFile();
+		bitcoin.readInputFile();
+	}
+	catch (const std::invalid_argument& e)
+	{
+		std::cerr << RED << "Error: " << e.what() << std::endl << DEF;
+	}
 	
 	return 0;
 }

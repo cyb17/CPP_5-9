@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 12:06:49 by yachen            #+#    #+#             */
-/*   Updated: 2024/05/29 18:56:46 by yachen           ###   ########.fr       */
+/*   Updated: 2024/05/30 16:13:08 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,15 +20,18 @@ using std::cout;
 
 BitcoinExchange::BitcoinExchange( const char* price, const char* input ) : _price( 0 ), _priceFilePath( price ), _inputFilePath( input )
 {
-	checkDataFilePath( _priceFilePath );
-	openFiles();
+	if (!isValidDataFilePath( _priceFilePath ))
+		throw std::invalid_argument( "price file path not valid" );
+	if (!openFiles())
+		throw std::invalid_argument( "open data files failed" );
 }
 
 BitcoinExchange::BitcoinExchange( const BitcoinExchange& other ) : _price( other._price )
 {
 	_priceFilePath = other._priceFilePath;
     _inputFilePath = other._inputFilePath;
-	openFiles();
+	if (!openFiles())
+		throw std::invalid_argument( "open data files failed" );
 	_bitcoinPrice = other._bitcoinPrice; 
 }
 
@@ -47,7 +50,8 @@ BitcoinExchange&	BitcoinExchange::operator= ( const BitcoinExchange& other )
 		_price = other._price;
 		_priceFilePath = other._priceFilePath;
 		_inputFilePath = other._inputFilePath;
-		openFiles();
+		if (!openFiles())
+			throw std::invalid_argument( "open data files failed" );
 		_bitcoinPrice = other._bitcoinPrice;
 	}
 	return *this;
@@ -58,9 +62,9 @@ void	BitcoinExchange::readDataFile()
 	std::string	line;
 	
 	std::getline(_priceFile, line);
-	if (_priceFile.fail() || _priceFile.eof())	//check if is a file not a directory, check if file is empty.
-		exitProgram( "read price data file failed" );
-	else if (line.compare( "date,exchange_rate" ) == 0)
+	if (_priceFile.fail() || _priceFile.eof())								// check if is a file not a directory, check if file is empty.
+		throw std::invalid_argument( "read price data file failed" );
+	else if (line.compare( "date,exchange_rate" ) == 0)						// allow the existence of "date,exchange_rage" but only as first line
 		std::getline(_priceFile, line);
 	while (!line.empty())
 	{
@@ -69,15 +73,15 @@ void	BitcoinExchange::readDataFile()
 		std::string price = line.substr( comma + 1 );
 		
 		if (comma == std::string::npos || !isValidDate( date ) || !isValidPrice( price ))
-			exitProgram( "invalid content in price data file" );
+			throw std::invalid_argument( "invalid content in price data file" );
 		std::pair<std::map<std::string, double>::iterator, bool> result = _bitcoinPrice.insert( std::pair<std::string, double>(date, _price) );
-		if (!result.second) // result is a obj not a pointer, it stock return value of _bitcoinPrice.insert().
-			exitProgram( "insert new price failed, key already exist" );
+		if (!result.second)
+			throw std::invalid_argument( "insert new price failed, key already exist" );	// result is a obj not a pointer, it stock return value of _bitcoinPrice.insert().
 		line.clear();
 		std::getline(_priceFile, line);
 	}
 	if (_bitcoinPrice.empty())
-		exitProgram( "no price can be read from the price data file" );
+		throw std::invalid_argument( "no price can be read from the price data file" );
 }
 
 void	BitcoinExchange::readInputFile()
@@ -86,7 +90,7 @@ void	BitcoinExchange::readInputFile()
 	
 	std::getline( _inputFile, line );
 	if (_inputFile.fail() || _inputFile.eof())
-		exitProgram( "read input data file failed" );
+		throw std::invalid_argument( "read input data file failed" );
 	else if (line.compare( "date | value") == 0)
 		std::getline( _inputFile, line );
 	while (!line.empty())
@@ -101,14 +105,14 @@ void	BitcoinExchange::readInputFile()
 					throw std::invalid_argument( "invalid date => " + line );
 				std::string	value = line.substr(pipe + 2);
 				checkValue( value );
-				cout << date + " => " + value + " = " << std::endl;
+				printExchangedBitcoin( date, value );
 			}
 			else
 				throw std::invalid_argument( "bad input => " + line );
 		}
 		catch (const std::invalid_argument& e)
 		{
-			std::cerr << RED << e.what() << std::endl << DEF;
+			std::cerr << RED << "Error: " << e.what() << std::endl << DEF;
 		}
 		line.clear();
 		std::getline(_inputFile, line);
@@ -120,48 +124,86 @@ void	BitcoinExchange::readInputFile()
 // 
 //**********************************************************************
 
-void	BitcoinExchange::openFiles()
+bool	BitcoinExchange::isValidDataFilePath( const char*& priceFilePath )
+{
+	std::string	path( priceFilePath );
+	int	len = path.length();
+	if (len < 4 || (len == 4 && path.compare( ".csv" ) != 0) || path.substr(len - 4) != ".csv")
+		return false;
+	return true;
+}
+
+bool	BitcoinExchange::openFiles()
 {
 	_priceFile.open( _priceFilePath );
 	_inputFile.open( _inputFilePath );
 	if (!_priceFile.is_open() || !_inputFile.is_open())
-		exitProgram( "open data files failed" );
+		return false;
+	return true;
 }
 
 void	BitcoinExchange::checkValue( std::string& value )
 {
 	int		start = 0;
-	int		nb = 0;
-	float	fnb = 0.0;
-	
-	if (value[0] == '+' || value[0] == '-')
+	if (value[0] == '+')
 		start++;
 	else if (value[0] == '-')
-		throw std::invalid_argument( "not a positive nb.");
-
+		throw std::invalid_argument( "not a positive number => " + value);
 	if (value.find_first_not_of( "0123456789.", start ) != std::string::npos)
-		throw std::invalid_argument( "not a nb => " + value );
+		throw std::invalid_argument( "not a number => " + value );
 	size_t	pointPosition = value.find_first_of('.');
-	if (pointPosition != std::string::npos && pointPosition != value.find_last_of( '.' ))
-		throw std::invalid_argument( "not a nb => " + value );
-	std::stringstream	ss( value ); 
-	ss >> fnb;
-	if (ss.fail())
-		throw std::invalid_argument( "too large nb" );
-	
 	std::stringstream	ss( value );
-	ss >> nb;
-	if (ss.fail())
-		throw std::invalid_argument( "too large nb" );
+	if (pointPosition == std::string::npos)
+	{
+		int	nb;
+		ss >> nb;
+		if (nb > 1000 || ss.fail())	
+			throw std::invalid_argument( "too large number" );
+	}
+	else if (pointPosition == value.find_last_of( '.' ))
+	{
+		float	fnb;
+		ss >> fnb;
+		if (fnb > 1000.0f || ss.fail())
+			throw std::invalid_argument( "too large number" );
+	}
+	else
+		throw std::invalid_argument( "not a number => " + value );
+	
+}
+
+void	BitcoinExchange::printExchangedBitcoin( const std::string date, const std::string& value )
+{
+	double	rslt;
+	std::stringstream	ss( value );
+	ss >> rslt;
+	
+	std::map<std::string, double>::iterator	it = _bitcoinPrice.find( date );
+	if (it == _bitcoinPrice.end())
+	{
+		it = _bitcoinPrice.lower_bound( date );
+		if (it == _bitcoinPrice.begin())
+			throw std::invalid_argument( "no valid date before => " + date );	
+		--it;
+	}
+	rslt *= it->second;
+	cout << GREEN << date + " => " + value + " = " << rslt << DEF << std::endl;
+}
+
+bool	BitcoinExchange::isBissextile( int& year )
+{
+	if ((year % 4 != 0) || (year % 4 == 0 && year % 100 == 0 && year % 400 != 0 ))
+		return false;
+	return true;
 }
 
 bool	BitcoinExchange::isValidDate( std::string& date )
 {
-	if (date.length() != 10 || date[4] != '-' || date[7] != '-')
+	if (date.length() != 10 || date[4] != '-' || date[7] != '-')		// check '-' position
 		return false;
 	for (size_t i = 0; i < date.length(); i++)
 	{
-		if ((date[i] < '0' || date[i] > '9') && i != 4 && i != 7 && i != 10)
+		if (i != 4 && i != 7 && (date[i] < '0' || date[i] > '9'))		// check if others positions are alls digit 
 			return false;
 	}
 	std::string	years = date.substr( 0, 4 );
@@ -170,42 +212,30 @@ bool	BitcoinExchange::isValidDate( std::string& date )
 	int	y = atoi( years.c_str() );
 	int	m = atoi( month.c_str() );
 	int	d = atoi( day.c_str() );
-	if (y < 2009 || y > 2024 || m < 1 || m > 12 || d > 31
-		|| ((m == 4 || m == 6 || m == 9 || m == 11) && d > 30)
-		|| (y == 2009 && m == 1 && d < 3) // the bitcoin network was created on 3/01/2009.
-		|| (m == 2 && y % 400 != 0 && d > 28)
-		|| (m == 2 && y % 400 == 0 && d > 29)) // leap year(annee bissextile) had 366days (29days on february).
-		return false;
-	return true;
+	if (y >= 2009 && y < 2024 && m > 0 && d > 0)
+	{	
+		if (y == 2009 && m == 1 && d < 3)								// bitcoin network was created in 3/01/2009
+			return false;
+		else if (((m == 1 || m == 3 || m == 5 || m == 7 || m == 8 || m == 10 || m == 12) && d <= 31)
+			|| ((m == 4 || m == 6 || m == 9 || m == 11) && d <= 30)
+			|| (m == 2 && isBissextile( y ) == 0 && d <= 28)
+			|| (m == 2 && isBissextile( y ) == 1 && d <= 29))			// leap year(annee bissextile) had 366days (29days on february).
+			return true;
+	}
+	return false;
 }
 
 bool	BitcoinExchange::isValidPrice( std::string& price )
 {
 	if (price.find_first_not_of( "0123456789." ) != std::string::npos)
 		return false;
-	size_t	pointPosition = price.find_first_of('.');
+	size_t	pointPosition = price.find_first_of('.');					// check if there is only 1 point.
 	if (pointPosition != std::string::npos && pointPosition != price.find_last_of( '.' ))
 		return false;
-	std::stringstream	ss( price ); //check if price is not > DBL_MAX. 
+	std::stringstream	ss( price );									// check if price is not bigger than double_max. 
 	ss >> _price;
 	if (ss.fail())
 		return false;
 	return true;
 }
 
-void	BitcoinExchange::exitProgram( const std::string errMsg )
-{
-	std::cerr << RED << "Error: "<< errMsg << DEF << std::endl;
-	BitcoinExchange::~BitcoinExchange();
-	exit(EXIT_FAILURE);
-}
-
-void	BitcoinExchange::checkDataFilePath( const char*& priceFilePath )
-{
-	std::string	path( priceFilePath );
-	int	len = path.length();
-	if (len < 4 || (len == 4 && path.compare( ".csv" ) != 0)
-		|| path.substr(len - 4) != ".csv")
-		exitProgram( "Price file path not valid" );
-	return ;
-}

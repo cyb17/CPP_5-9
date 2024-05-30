@@ -1,0 +1,21 @@
+price file test: 
+
+	bad extension
+	empty
+	white spaces
+	directory
+	permission denied
+
+	bad content :	invalid date : no exist month/day, bisextile year
+				 	invalid price : valid nb, price limit 
+					invalid format : date,exchange_rate
+
+input file test:
+
+	white spaces
+	directory
+	permission denied
+	bad content :	invalid date : no exist month/day, bisextile year
+					invalid value : 0 <= nb <= 1000, value limit
+					invalid format : date | value
+
