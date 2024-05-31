@@ -6,51 +6,73 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 13:10:38 by yachen            #+#    #+#             */
-/*   Updated: 2024/05/31 14:17:28 by yachen           ###   ########.fr       */
+/*   Updated: 2024/05/31 15:52:36 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "RNP.hpp"
+#include "RPN.hpp"
 #include <stdexcept>
 #include <cctype>
+#include <cstring>
+#include <climits>
 
 RPN::RPN() {}
 
-RPN::RPN( const RPN& other ) {}
+RPN::RPN( const RPN& other ) : _c( other._c ) {}
 
 RPN::~RPN() {}
 
-RPN&	RPN::operator=( const RPN& other ) {}
+RPN&	RPN::operator=( const RPN& other )
+{
+	if (this != &other)
+		_c = other._c;
+	return *this;
+}
 
 int	RPN::calculateResult( const char* exp )
 {
+	long	rslt = 0;
+	size_t	i = -1;
 	std::stack<int>	stack;
 	
-	while (exp[i])
+	while (exp[++i])
 	{
+		if ( isdigit( exp[i]) && i == strlen(exp) - 1)
+			throw std::invalid_argument( "expression must terminated with a operator: +,-,*,/" );
 		if (isspace( exp[i] ))
 			continue;
-		else if ( isdigit( exp[i]) )
-			stack.push( exp[i] - '0' )
+		else if ( isdigit( exp[i]))
+			stack.push( exp[i] - '0' );
 		else if ( isOperator( exp[i] ) && stack.size() > 1)
 		{
-			int	operand1 = stack.top();
+			long	operand1 = stack.top();
 			stack.pop();
-			int operand2 = stack.top();
+			long	operand2 = stack.top();
 			stack.pop();
-			int	rslt = doOperation( exp[i], operand2, operand1 );
+			rslt = doOperation( exp[i], operand2, operand1 );
+			if (rslt < INT_MIN || rslt > INT_MAX)
+				throw std::runtime_error( "result exceeded the limit of an int" );
 			stack.push( rslt );
 		}
-
+		else
+			throw std::invalid_argument( "invalid expression" );
 	}
+	if (stack.empty())
+		throw std::invalid_argument( "expression can not be NULL or empty" );
+	return static_cast<int>(rslt);
 }
 
-bool	RNP::isOperator( char c )
+//***********************************************************************************
+//				Private functions definitions
+//
+//***********************************************************************************
+
+bool	RPN::isOperator( char c )
 {
 	return (c == '+' || c == '-' || c == '*' || c == '/');
 }
 
-int	RPN::doOperation( char optor, int op2, int op1 )
+long	RPN::doOperation( char optor, long op2, long op1)
 {
 	switch(optor)
 	{
@@ -62,7 +84,6 @@ int	RPN::doOperation( char optor, int op2, int op1 )
 			return op2 * op1;
 		case '/':
 			return op2 / op1;
-		default:
-			breack
 	}
+	return -1;
 }

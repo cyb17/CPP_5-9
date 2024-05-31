@@ -6,12 +6,12 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 11:59:59 by yachen            #+#    #+#             */
-/*   Updated: 2024/05/31 12:33:00 by yachen           ###   ########.fr       */
+/*   Updated: 2024/05/31 16:09:10 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef BITCOINEXCHANGE_HPP
-#define BITCOINEXCHANGE_HPP
+#ifndef BITCOIN_EXCHANGE_HPP
+#define BITCOIN_EXCHANGE_HPP
 
 #include <map>
 #include <string>

@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 12:14:35 by yachen            #+#    #+#             */
-/*   Updated: 2024/05/31 13:32:11 by yachen           ###   ########.fr       */
+/*   Updated: 2024/05/31 15:51:00 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,10 @@
 class	RPN
 {
 	private:
-		
-		// int			_result;
-		std::stack	_stack;
-		
-		bool	isValidExpression();
+
+		char	_c;
+		bool	isOperator( char c );
+		long	doOperation( char optor, long op2, long op1);
 		
 	public:
 	
