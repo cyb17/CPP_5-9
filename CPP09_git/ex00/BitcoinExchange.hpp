@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 11:59:59 by yachen            #+#    #+#             */
-/*   Updated: 2024/05/30 17:17:06 by yachen           ###   ########.fr       */
+/*   Updated: 2024/05/31 12:33:00 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,9 @@ class	BitcoinExchange
 		void	checkValue( const std::string& value );
 		bool	isValidDataFilePath( const char*& priceFilePath );
 		void	printExchangedBitcoin( const std::string date, const std::string& value );
+
+		void	readDataFile();
+		void	readInputFile();
 		
 	public:
 
@@ -50,8 +53,7 @@ class	BitcoinExchange
 
 		BitcoinExchange&	operator=( const BitcoinExchange& other );
 		
-		void	readDataFile();
-		void	readInputFile();
+		void	exchangeBitcoin();
 };
 
 #endif

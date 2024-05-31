@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 12:06:49 by yachen            #+#    #+#             */
-/*   Updated: 2024/05/30 17:26:28 by yachen           ###   ########.fr       */
+/*   Updated: 2024/05/31 12:59:27 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ BitcoinExchange::BitcoinExchange( const BitcoinExchange& other ) : _price( other
     _inputFilePath = other._inputFilePath;
 	if (!openFiles())
 		throw std::invalid_argument( "open data files failed" );
-	_bitcoinPrice = other._bitcoinPrice; 
 }
 
 BitcoinExchange::~BitcoinExchange()
@@ -50,21 +49,36 @@ BitcoinExchange&	BitcoinExchange::operator= ( const BitcoinExchange& other )
 		_price = other._price;
 		_priceFilePath = other._priceFilePath;
 		_inputFilePath = other._inputFilePath;
+		if (_priceFile.is_open())
+			_priceFile.close();
+		if (_inputFile.is_open())
+			_inputFile.close();
+		if (!_bitcoinPrice.empty())
+			_bitcoinPrice.clear();
 		if (!openFiles())
 			throw std::invalid_argument( "open data files failed" );
-		_bitcoinPrice = other._bitcoinPrice;
 	}
 	return *this;
 }
 
+void	BitcoinExchange::exchangeBitcoin()
+{
+	readDataFile();
+	readInputFile();
+}
+
+//**********************************************************************
+//						definition of private functions					
+// 
+//**********************************************************************
+
 void	BitcoinExchange::readDataFile()
 {
 	std::string	line;
-	
 	std::getline(_priceFile, line);
 	if (_priceFile.fail() || _priceFile.eof())								// check if is a file not a directory, check if file is empty.
 		throw std::invalid_argument( "read price data file failed" );
-	else if (line.compare( "date,exchange_rate" ) == 0)						// allow the existence of "date,exchange_rage" but only as first line
+	else if (line.compare( "date,exchange_rate" ) == 0)						// allow the existence of "date,exchange_rage" but only as first line.
 		std::getline(_priceFile, line);
 	while (!line.empty())
 	{
@@ -72,14 +86,12 @@ void	BitcoinExchange::readDataFile()
 		std::string date = line.substr( 0, comma );
 		std::string price = line.substr( comma + 1 );
 		
-		// cout << "line : "  << line << " | " << "_date: " << date  << " | " << "_price: " <<  price << '\n';
 		if (comma == std::string::npos || !isValidDate( date ) || !isValidPrice( price ))
 			throw std::invalid_argument( "invalid content in price data file" );
-		// cout << "   line : "  << line << " | " << "_date: " << date  << " | " << "_price: " <<  price << '\n';
-		// cout << BLUE << "   	line : "  << line << " | " << "_date: " << date  << " | " << "_price: " <<  _price << '\n'<<DEF;
-		std::pair<std::map<std::string, double>::iterator, bool> result = _bitcoinPrice.insert( std::pair<std::string, double>(date, _price) );
-		if (!result.second)
-			throw std::invalid_argument( "insert new price failed, key already exist" );	// result is a obj not a pointer, it stock return value of _bitcoinPrice.insert().
+		std::pair<std::map<std::string, double>::iterator, bool> result;			// result is a obj, stock return value(->a iterator and a bool) of insert().
+		result = _bitcoinPrice.insert( std::pair<std::string, double>(date, _price) );
+		if (!result.second)		 											
+			throw std::invalid_argument( "insert new price failed, key already exist" );
 		line.clear();
 		std::getline(_priceFile, line);
 	}
@@ -90,7 +102,6 @@ void	BitcoinExchange::readDataFile()
 void	BitcoinExchange::readInputFile()
 {
 	std::string	line;
-	
 	std::getline( _inputFile, line );
 	if (_inputFile.fail() || _inputFile.eof())
 		throw std::invalid_argument( "read input data file failed" );
@@ -120,12 +131,7 @@ void	BitcoinExchange::readInputFile()
 		line.clear();
 		std::getline(_inputFile, line);
 	}
-}	
-
-//**********************************************************************
-//						definition of private functions					
-// 
-//**********************************************************************
+}
 
 bool	BitcoinExchange::isValidDataFilePath( const char*& priceFilePath )
 {
@@ -189,8 +195,9 @@ void	BitcoinExchange::printExchangedBitcoin( const std::string date, const std::
 			throw std::invalid_argument( "no valid date before => " + date );	
 		--it;
 	}
-	// cout << "price" << it->second << '\n';
 	rslt *= it->second;
+	std::cout << std::fixed;
+	std::cout.precision(2);
 	cout << GREEN << date + " => " + value + " = " << rslt << DEF << std::endl;
 }
 
@@ -236,10 +243,8 @@ bool	BitcoinExchange::isValidPrice( const std::string& price )
 	size_t	pointPosition = price.find_first_of('.');					// check if there is only 1 point.
 	if (pointPosition != std::string::npos && pointPosition != price.find_last_of( '.' ))
 		return false;
-	cout << "string: " << price << '\n'; 
-	std::stringstream	ss( price );									// check if price is not bigger than double_max. 
+	std::stringstream	ss( price );									// check if price can be assigned to a double.
 	ss >> _price;
-	cout << "_price: " << _price << '\n'; 
 	if (ss.fail())
 		return false;
 	return true;

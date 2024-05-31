@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 12:26:37 by yachen            #+#    #+#             */
-/*   Updated: 2024/05/30 16:23:18 by yachen           ###   ########.fr       */
+/*   Updated: 2024/05/31 12:59:53 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,24 @@ int	main(int argc, char** argv)
 	}
 	try
 	{
-		BitcoinExchange	bitcoin( "./teste/data.csv", argv[1] );
-		bitcoin.readDataFile();
-		bitcoin.readInputFile();
+		BitcoinExchange	bitcoin( "teste/data.csv", argv[1] );
+		bitcoin.exchangeBitcoin();
+		
+		// std::cout << "-------------------------------------\n";
+
+		// BitcoinExchange	copy( bitcoin );
+		// copy.exchangeBitcoin();
+
+		// std::cout << "-------------------------------------\n";
+
+		// BitcoinExchange	other( "teste/.csv", argv[1] );
+		// other.exchangeBitcoin();
+		
+		// std::cout << "-------------------------------------\n";
+		
+		// other = bitcoin;
+		// other.exchangeBitcoin();
+
 	}
 	catch (const std::invalid_argument& e)
 	{
