@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 16:08:24 by yachen            #+#    #+#             */
-/*   Updated: 2024/06/06 13:42:36 by yachen           ###   ########.fr       */
+/*   Updated: 2024/06/06 15:06:20 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ class	PmergeMe
 		char**								_sequence;
 		int									_unpaired;
 		std::vector<std::pair<int, int> >	_pair;
-		std::vector<std::pair<int, int> >	_mergeArr;
 		std::vector<int>					_vBefore;
 		std::list<int>						_lBefore;
 		

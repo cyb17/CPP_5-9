@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 13:02:07 by yachen            #+#    #+#             */
-/*   Updated: 2024/06/06 13:44:23 by yachen           ###   ########.fr       */
+/*   Updated: 2024/06/06 18:07:38 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,35 +97,92 @@ void	PmergeMe::findMaxMakePairlist()
 		_pair.push_back( pair );
 	}
 
-	// std::vector<std::pair<int, int> >::iterator	i = _pair.begin();
-	// for (; i != _pair.end(); i++)
-	// 	cout << "pair :" << i->first << '\t' << i->second << std::endl;
-	// cout << _unpaired << std::endl;
+	cout << "========================================pair find max \n";
+	std::vector<std::pair<int, int> >::iterator	i = _pair.begin();
+	for (; i != _pair.end(); i++)
+		cout << "pair :" << i->first << '\t' << i->second << std::endl;
+	cout << "unpaired: " << _unpaired << std::endl;
+	cout << "_pair size: " << _pair.size() << std::endl;
 }
 
-void	PmergeMe::merge( const int begin, const int mid, const int end )
+// void	PmergeMe::merge( const int begin, const int mid, const int end )
+// {
+// 	int	leftSize = mid - begin + 1;
+// 	int	rightSize = end - mid;
+
+// 	std::vector<std::pair<int, int> >	leftArr;
+// 	std::vector<std::pair<int, int> >	rightArr;
+// 	std::copy( _pair.begin() + begin, _pair.begin() + mid + 1, std::back_inserter( leftArr ));
+// 	std::copy( _pair.begin() + mid + 1, _pair.begin() + end + 1, std::back_inserter( rightArr ));
+	
+// 	int	i = 0, j = 0, k = begin;
+// 	while (i < leftSize && j < rightSize)
+// 	{
+// 		std::cout << "mid = " << mid << '\t' << "left[i] = " << leftArr[i].first << '\t' << "right[i] = " << rightArr[j].first << '\n';
+// 		if (leftArr[i].first <= rightArr[j].first)
+// 			_pair[k++] = leftArr[i++];
+//         else
+//             _pair[k++] = rightArr[j++];
+// 	}
+// 	while (i < leftSize)
+//     		_pair[k++] = leftArr[i++];
+//     while (j < rightSize)
+// 			_pair[k++] = rightArr[j++];
+// }
+
+void	printArrPair( std::vector<std::pair<int, int> > arr )
+{	
+	for (std::vector<std::pair<int, int> >::iterator it = arr.begin(); it != arr.end(); ++it)
+	{
+		cout << "first: "<< it->first << "\tsecond: " << it->second << '\n';
+	}
+}
+
+void	PmergeMe::merge( const int left, const int mid, const int right )
 {
-	int	leftSize = end - mid + 1;
-	int	rightSize = end - mid;
+	int	leftSize = mid - left + 1;
+	int	rightSize = right - mid;
 
 	std::vector<std::pair<int, int> >	leftArr;
 	std::vector<std::pair<int, int> >	rightArr;
-	std::vector<std::pair<int, int> >	_mergeArr;
-	std::copy( _pair.begin() + begin, _pair.begin() + mid, std::back_inserter( leftArr ));
-	std::copy( _pair.begin() + mid + 1, _pair.begin() + end, std::back_inserter( rightArr ));
-	int	i = 0;
-	int	j = 0;
+	for (int i = 0; i < leftSize; i++)
+		leftArr.push_back(_pair[left + i]);
+	for (int i = 0; i < rightSize; i++)
+		rightArr.push_back(_pair[mid + 1 + i]);
+
+	cout << "-------------------------------leftArr \n";
+	printArrPair( leftArr );
+	cout << "-------------------------------rightArr \n";
+	printArrPair( rightArr );
+
+	int	i = 0, j = 0, k = left;
 	while (i < leftSize && j < rightSize)
 	{
+		if (mid == 4)
+		cout << "leftArr[i].first: " << leftArr[i].first << "\trightArr[i].first: " << rightArr[j].first << '\n';
 		if (leftArr[i].first <= rightArr[j].first)
-			_mergeArr.push_back( leftArr[i++] );
-		else		
-			_mergeArr.push_back( rightArr[j++] );
+		{
+			_pair[k++] = leftArr[i++];
+		}
+		else
+		{
+			_pair[k++] = rightArr[j++];
+		}
+		cout << "i = " << i << "\tj = " << j << '\n';
 	}
+	
 	while (i < leftSize)
-        _mergeArr.push_back( leftArr[i++] );
+    		_pair[k++] = leftArr[i++];
     while (j < rightSize)
-        _mergeArr.push_back( rightArr[j++] );
+			_pair[k++] = rightArr[j++];
+	
+	cout << "-------------------------------_pair merged \n";
+	cout << "left = " << left << "\tmid = " << mid << "\tright = " << right << '\n'; 
+	cout << "merge\tleftSize = " << leftSize << "\trightSize = " << rightSize << '\n'; 
+	printArrPair( _pair );
+	
+	cout << "========================================merge \n";
+
 }
 
 void	PmergeMe::mergeSort( const int begin, const int end )
@@ -133,16 +190,21 @@ void	PmergeMe::mergeSort( const int begin, const int end )
 	if (begin >= end)
 		return;
 	int mid = begin + (end - begin) / 2;
+	cout << "recursive left value\n";
 	mergeSort( begin, mid );
+	cout << "recursive right value\n";
 	mergeSort( mid + 1, end );
 	merge( begin, mid, end );
 }
 
 void	PmergeMe::printMergeInfo()
 {
-	std::vector<std::pair<int, int> >::iterator	it = _mergeArr.begin();
-	for (; it != _mergeArr.end(); it++)
-		std::cout << "\tmerge :" << it->first << '\t' << it->second << std::endl;
+	std::vector<std::pair<int, int> >::iterator	it = _pair.begin() + 2;
+	std::cout << _pair.size() << '\n';
+	for (; it != _pair.end() + 2; it++)
+	{
+		std::cout << "\tprint :" << it->first << '\t' << it->second << std::endl;
+	}	
 	// cout << "Before : ";
 	// std::vector<int>::iterator	it = _vBefore.begin();
 	// for (; it < _vBefore.end(); it++)

@@ -1,13 +1,11 @@
-#include <iostream>
-#include <cstdlib>
-#include <utility>
+#include <bits/stdc++.h>
 
-int	main( int argc, char** argv)
+int main () 
 {
-	std::pair<int, int>	pair;
+  	std::vector<std::pair<int, int> >	leftArr;
+	// std::vector<std::pair<int, int> >	rightArr;
 
-	pair = std::make_pair(1, 2);
+	std::cout << leftArr.size() << '\n';
 
-	std::cout << pair.first << '|' <<  pair.second << std::endl;
-	return 0;
+  return 0;
 }
