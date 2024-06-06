@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 15:35:56 by yachen            #+#    #+#             */
-/*   Updated: 2024/06/04 17:43:35 by yachen           ###   ########.fr       */
+/*   Updated: 2024/06/06 13:43:29 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,9 @@ int	main( int argc, char** argv )
 		{
 			PmergeMe	merge( argv + 1 );
 			
-			merge.pushToVector();
+			// merge.pushToVector();
+			merge.findMaxMakePairlist();
+			merge.mergeSort( 0, 6 );
 			merge.printMergeInfo();
 		}
 		catch ( const std::invalid_argument& e )
