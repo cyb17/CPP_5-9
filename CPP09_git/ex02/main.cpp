@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 15:35:56 by yachen            #+#    #+#             */
-/*   Updated: 2024/06/07 17:23:24 by yachen           ###   ########.fr       */
+/*   Updated: 2024/06/07 17:51:14 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,6 @@ int	main( int argc, char** argv )
 			merge.mergeSort( 0, 5 );
 			merge.vectorInsertSort();
 			merge.listInsertSort();
-
-			// merge.printMergeInfo();
 		}
 		catch ( const std::invalid_argument& e )
 		{

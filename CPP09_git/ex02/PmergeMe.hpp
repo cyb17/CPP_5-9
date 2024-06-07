@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 16:08:24 by yachen            #+#    #+#             */
-/*   Updated: 2024/06/07 17:24:13 by yachen           ###   ########.fr       */
+/*   Updated: 2024/06/07 17:50:52 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,12 @@ class	PmergeMe
 		std::vector<int>					_unsortedList;
 		std::vector<std::pair<int, int> >	_pair;
 		
-		void	parseSequence();
-		void	merge( const int begin, const int mid, const int end );
+		void				parseSequence();
+		void				merge( const int begin, const int mid, const int end );
+		void				MakePairlist();
+		void				mergeSort( const int begin, const int end );
+		std::vector<int>	vectorInsertSort();
+		std::list<int>		listInsertSort();
 
 	public:
 	
@@ -44,10 +48,9 @@ class	PmergeMe
 
 		PmergeMe&	operator=( const PmergeMe& other );
 		
-		void				findMaxMakePairlist();
-		void				mergeSort( const int begin, const int end );
-		std::vector<int>	vectorInsertSort();
-		std::list<int>		listInsertSort();
+		std::vector<int>	vectorSort();
+		std::list<int>		listSort();
+		void				printMergeInfo();
 };
 
 template <typename T>

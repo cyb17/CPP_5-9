@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 13:02:07 by yachen            #+#    #+#             */
-/*   Updated: 2024/06/07 17:28:20 by yachen           ###   ########.fr       */
+/*   Updated: 2024/06/07 17:50:43 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	PmergeMe::parseSequence()
 }
 
 // Make list of pair nb : first = max | second = min, _unpaired = unpaired nb if exist. 
-void	PmergeMe::findMaxMakePairlist()
+void	PmergeMe::MakePairlist()
 {
 	std::vector<int>::iterator	it = _unsortedList.begin();
 	std::vector<int>::iterator	end = _unsortedList.end();
@@ -164,3 +164,16 @@ std::list<int>	PmergeMe::listInsertSort()
 	return sorted;
 }
 
+void	PmergeMe::vectorSort()
+{
+	findMaxMakePairlist();
+	mergeSort();
+	return vectorInsertSort();
+}
+
+void	PmergeMe::listSort()
+{
+	findMaxMakePairlist();
+	mergeSort();
+	return listInsertSort();
+}
