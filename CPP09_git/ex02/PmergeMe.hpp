@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 16:08:24 by yachen            #+#    #+#             */
-/*   Updated: 2024/06/06 15:06:20 by yachen           ###   ########.fr       */
+/*   Updated: 2024/06/07 17:24:13 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,13 @@ class	PmergeMe
 {
 	private:
 
-		char**								_sequence;
 		int									_unpaired;
+		char**								_sequence;
+		std::vector<int>					_unsortedList;
 		std::vector<std::pair<int, int> >	_pair;
-		std::vector<int>					_vBefore;
-		std::list<int>						_lBefore;
 		
 		void	parseSequence();
+		void	merge( const int begin, const int mid, const int end );
 
 	public:
 	
@@ -44,14 +44,19 @@ class	PmergeMe
 
 		PmergeMe&	operator=( const PmergeMe& other );
 		
-		// void	pushToVector();
-		// void	pushTolist();
-		// std::vector<int>	vectorMerge();
-		// std::list<int>		listMerge();
 		void				findMaxMakePairlist();
-		void				merge( const int begin, const int mid, const int end );
 		void				mergeSort( const int begin, const int end );
-		void				printMergeInfo();
+		std::vector<int>	vectorInsertSort();
+		std::list<int>		listInsertSort();
 };
+
+template <typename T>
+void	printContainer( T& c )
+{
+	typename T::iterator	it = c.begin();
+	for (; it != c.end(); ++it)
+		std::cout << "c : " << *it << '\t';
+	std::cout << std::endl;
+}
 
 #endif
