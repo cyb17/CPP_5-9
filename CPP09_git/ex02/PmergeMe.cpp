@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 13:02:07 by yachen            #+#    #+#             */
-/*   Updated: 2024/06/07 17:50:43 by yachen           ###   ########.fr       */
+/*   Updated: 2024/06/08 11:49:37 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,115 +65,112 @@ void	PmergeMe::parseSequence()
 	}
 }
 
-// Make list of pair nb : first = max | second = min, _unpaired = unpaired nb if exist. 
-void	PmergeMe::MakePairlist()
+void	PmergeMe::merge( std::vector<std::pair<int, int> >& pair, const int left, const int mid, const int right )
 {
-	std::vector<int>::iterator	it = _unsortedList.begin();
-	std::vector<int>::iterator	end = _unsortedList.end();
-	if ( _unsortedList.size() % 2 != 0 )
-	{
-		end = _unsortedList.end() - 1;
-		_unpaired = *end;
-	}
-	for (; it != end; it+=2)
-	{
-		std::pair<int, int> pair = std::make_pair( *it, *(it + 1) );
-		if (pair.first < pair.second)
-			std::swap( pair.first, pair.second );
-		_pair.push_back( pair );
-	}
-}
-
-void	PmergeMe::merge( const int left, const int mid, const int right )
-{
+				// split pair to 2 list : left nb and right nb.
 	int	leftSize = mid - left + 1;
 	int	rightSize = right - mid;
 	std::vector<std::pair<int, int> >	leftArr;
 	std::vector<std::pair<int, int> >	rightArr;
 	for (int i = 0; i < leftSize; i++)
-		leftArr.push_back(_pair[left + i]);
+		leftArr.push_back(pair[left + i]);
 	for (int i = 0; i < rightSize; i++)
-		rightArr.push_back(_pair[mid + 1 + i]);
-	
+		rightArr.push_back(pair[mid + 1 + i]);
+				// compare the max of each pair to make pair sorted.
 	int	i = 0, j = 0, k = left;
 	while (i < leftSize && j < rightSize)
 	{
 		if (leftArr[i].first <= rightArr[j].first)
-			_pair[k++] = leftArr[i++];
+			pair[k++] = leftArr[i++];
 		else
-			_pair[k++] = rightArr[j++];
+			pair[k++] = rightArr[j++];
 	}
-	
+				// add the rest tp pair.
 	while (i < leftSize)
-    		_pair[k++] = leftArr[i++];
+    		pair[k++] = leftArr[i++];
     while (j < rightSize)
-			_pair[k++] = rightArr[j++];
+			pair[k++] = rightArr[j++];
 }
 
-// Sort pair->first(max) in ascending order.
-void	PmergeMe::mergeSort( const int begin, const int end )
+// make pair list sorted with :pair->first = max, in ascending order.
+void	PmergeMe::mergeSort( std::vector<std::pair<int, int> >& pair, const int begin, const int end )
 {
 	if (begin >= end)
 		return;
 	int mid = begin + (end - begin) / 2;
-	mergeSort( begin, mid );
-	mergeSort( mid + 1, end );
-	merge( begin, mid, end );
+	mergeSort(pair, begin, mid );
+	mergeSort(pair, mid + 1, end );
+	merge(pair, begin, mid, end );
 }
 
-std::vector<int>	PmergeMe::vectorInsertSort()
+void	PmergeMe::vectorInsertSort( std::vector<int>& sorted, std::vector<std::pair<int, int> >& pair )
 {
-	std::vector<int>	sorted;
 	std::vector<int>	unsorted;
 	if (_unpaired != -1)
 		unsorted.push_back( _unpaired );
-	sorted.push_back( _pair[0].second );
-	for (size_t i = 0, j = 1; i < _pair.size() && j < _pair.size(); i++, j++)
-	{
-		sorted.push_back( _pair[i].first );
-		unsorted.push_back( _pair[j].second );
-	}
+	sorted.push_back( pair[0].second );
+	for (size_t i = 0; i < pair.size(); i++)
+		sorted.push_back( pair[i].first );
+	for (size_t i = 1; i < pair.size(); i++)
+		unsorted.push_back( pair[i].second );
 	std::vector<int>::iterator	end;
 	for (size_t i = 0; i < unsorted.size(); i++)
 	{
 		end = std::upper_bound( sorted.begin(), sorted.end(), unsorted[i] );
 		sorted.insert( end, unsorted[i] );
 	}
-	return sorted;
 }
 
-std::list<int>	PmergeMe::listInsertSort()
+std::vector<int>	PmergeMe::vectorMergeInsertSort()
 {
-	std::list<int>	sorted;
-	std::list<int>	unsorted;
-	if (_unpaired != -1)
-		unsorted.push_back( _unpaired );
-	sorted.push_back( _pair[0].second );
-	for (size_t i = 0, j = 1; i < _pair.size() && j < _pair.size(); i++, j++)
+	if (_unsortedList.size() == 1)
+		return _unsortedList;
+	else if (_unsortedList.size() == 2)
 	{
-		sorted.push_back( _pair[i].first );
-		unsorted.push_back( _pair[j].second );
+		if (_unsortedList[0] > _unsortedList[1])
+			std::swap( _unsortedList[0], _unsortedList[1] );
+		return _unsortedList;
 	}
-	std::list<int>::iterator	end;
-	std::list<int>::iterator	it = unsorted.begin();
-	for (; it != unsorted.end(); ++it)
-	{
-		end = std::upper_bound( sorted.begin(), sorted.end(), *it );
-		sorted.insert( end, *it );
-	}
-	return sorted;
+	std::vector<int>	sortedList;
+	std::vector<std::pair<int, int> >	pair = makePairlist<std::vector<std::pair<int,int> > >();
+	mergeSort(pair, 0, pair.size() - 1 );
+	vectorInsertSort( sortedList, pair);
+	return sortedList;
 }
 
-void	PmergeMe::vectorSort()
+void	PmergeMe::printProgramInfo( const std::vector<int>& v )
 {
-	findMaxMakePairlist();
-	mergeSort();
-	return vectorInsertSort();
+	std::cout << "Before: ";
+	printContainer<std::vector<int> >( _unsortedList );
+	std::cout << "After: ";
+	printContainer<std::vector<int> >( v );
 }
 
-void	PmergeMe::listSort()
-{
-	findMaxMakePairlist();
-	mergeSort();
-	return listInsertSort();
-}
+// std::list<int>	PmergeMe::listInsertSort()
+// {
+// 	std::list<int>	sorted;
+// 	std::list<int>	unsorted;
+// 	if (_unpaired != -1)
+// 		unsorted.push_back( _unpaired );
+// 	sorted.push_back( _pair[0].second );
+// 	for (size_t i = 0, j = 1; i < _pair.size() && j < _pair.size(); i++, j++)
+// 	{
+// 		sorted.push_back( _pair[i].first );
+// 		unsorted.push_back( _pair[j].second );
+// 	}
+// 	std::list<int>::iterator	end;
+// 	std::list<int>::iterator	it = unsorted.begin();
+// 	for (; it != unsorted.end(); ++it)
+// 	{
+// 		end = std::upper_bound( sorted.begin(), sorted.end(), *it );
+// 		sorted.insert( end, *it );
+// 	}
+// 	return sorted;
+// }
+
+// void	PmergeMe::listSort()
+// {
+	// findMaxMakePairlist();
+	// mergeSort();
+	// return listInsertSort();
+// }

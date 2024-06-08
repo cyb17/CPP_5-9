@@ -6,11 +6,13 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 15:35:56 by yachen            #+#    #+#             */
-/*   Updated: 2024/06/07 17:51:14 by yachen           ###   ########.fr       */
+/*   Updated: 2024/06/08 12:54:56 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "PmergeMe.hpp"
+#include <ctime>
+#include <iomanip>
 
 int	main( int argc, char** argv )
 {
@@ -23,13 +25,14 @@ int	main( int argc, char** argv )
 	{
 		try
 		{
+			std::clock_t	t = clock();
 			PmergeMe	merge( argv + 1 );
-			
-			merge.findMaxMakePairlist();
-			merge.mergeSort( 0, 5 );
-			merge.vectorInsertSort();
-			merge.listInsertSort();
-		}
+			std::vector<int>	v = merge.vectorMergeInsertSort();
+			merge.printProgramInfo( v );
+			t = clock() - t;
+			std::cout << std::fixed << std::setprecision( 5 );
+			std::cout << "time : " << t << " clicks of CPU | " << static_cast<float>(t) / CLOCKS_PER_SEC << "ms" << '\n';
+}
 		catch ( const std::invalid_argument& e )
 		{
 			std::cerr << RED << "Error: " << e.what() << std::endl << DEF;
