@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 13:02:07 by yachen            #+#    #+#             */
-/*   Updated: 2024/06/09 12:43:03 by yachen           ###   ########.fr       */
+/*   Updated: 2024/06/09 17:53:58 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -224,26 +224,26 @@ void	PmergeMe::listMergeSort( std::list<std::pair<int, int> >& pair, const int b
 	mergeList(pair, begin, mid, end );
 }
 
-// void	PmergeMe::listInsertSort( std::list<int>& sorted, const std::list<std::pair<int, int> >& pair )
-// {
-// 	std::list<std::pair<int, int> >::const_iterator	pair_it = pair.begin();
-// 	std::list<int>	unsorted;
-// 	if (_unpaired != -1)
-// 		unsorted.push_back( _unpaired );
-// 	sorted.push_back( (++pair_it)->second );
-// 	for (; pair_it != pair.end(); ++pair_it)
-// 		unsorted.push_back( pair_it->second );
-// 	for (pair_it = pair.begin(); pair_it != pair.end(); ++pair_it)
-// 		sorted.push_back( pair_it->first );
-// 	std::list<int>::iterator	end;
-// 	std::list<int>::iterator	unsorted_it = unsorted.begin();
-// 	for (size_t i = 0; i < unsorted.size(); i++)
-// 	{
-// 		end = std::upper_bound( sorted.begin(), sorted.end(), *unsorted_it );
-// 		sorted.insert( end, *unsorted_it );
-// 		unsorted_it++;
-// 	}
-// }
+void	PmergeMe::listInsertSort( std::list<int>& sorted, const std::list<std::pair<int, int> >& pair )
+{
+	std::list<std::pair<int, int> >::const_iterator	pair_it = pair.begin();
+	std::list<int>	unsorted;
+	if (_unpaired != -1)
+		unsorted.push_back( _unpaired );
+	sorted.push_back( (pair_it++)->second );
+	for (; pair_it != pair.end(); ++pair_it)
+		unsorted.push_back( pair_it->second );
+	for (pair_it = pair.begin(); pair_it != pair.end(); ++pair_it)
+		sorted.push_back( pair_it->first );
+	std::list<int>::iterator	end;
+	std::list<int>::iterator	unsorted_it = unsorted.begin();
+	for (size_t i = 0; i < unsorted.size(); i++)
+	{
+		end = std::upper_bound( sorted.begin(), sorted.end(), *unsorted_it );
+		sorted.insert( end, *unsorted_it );
+		unsorted_it++;
+	}
+}
 
 std::list<int>	PmergeMe::listMergeInsertSort()
 {
@@ -259,9 +259,7 @@ std::list<int>	PmergeMe::listMergeInsertSort()
 	std::list<int>	sortedList;
 	std::list<std::pair<int, int> >	pair = makeListPairlist( unsorted );
 	listMergeSort(pair, 0, pair.size() - 1 );
-	printPair( pair );
 	listInsertSort( sortedList, pair);
-	printContainer( sortedList );
 	return sortedList;
 }
 
