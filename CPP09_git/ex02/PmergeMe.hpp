@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 16:08:24 by yachen            #+#    #+#             */
-/*   Updated: 2024/06/08 14:58:01 by yachen           ###   ########.fr       */
+/*   Updated: 2024/06/09 12:34:51 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,11 @@ class	PmergeMe
 		void								vectorMergeSort( std::vector<std::pair<int, int> >& pair, const int begin, const int end );
 		void								vectorInsertSort( std::vector<int>& sorted, const std::vector<std::pair<int, int> >& pair );
 		
+		std::list<std::pair<int,int> >		makeListPairlist( const std::list<int>& unsorted );
+		void								listMergeSort( std::list<std::pair<int, int> >& pair, const int begin, const int end );
+		void								mergeList( std::list<std::pair<int, int> >& pair, const int left, const int mid, const int right );
+		void								listInsertSort( std::list<int>& sorted, const std::list<std::pair<int, int> >& pair );
+
 		// std::list<int>		listInsertSort();
 
 	public:
@@ -55,7 +60,7 @@ class	PmergeMe
 		void				printProgramInfo( T& c );
 		
 		std::vector<int>	vectorMergeInsertSort();
-		// std::list<int>		listMergeInsertSort();
+		std::list<int>		listMergeInsertSort();
 		
 };
 
@@ -85,32 +90,32 @@ T	PmergeMe::sequenceToNblist()
 	return unsortedNb;
 }
 
-// template <typename T>
-// void	printContainer( const T& c )
-// {
-// 	typename T::const_iterator	it = c.begin();
-// 	std::cout << "container content : \n";
-// 	for (; it != c.end(); ++it)
-// 		std::cout << *it << '\t';
-// 	std::cout << std::endl;
-// }
+template <typename T>
+void	printContainer( const T& c )
+{
+	typename T::const_iterator	it = c.begin();
+	std::cout << "container content : \n";
+	for (; it != c.end(); ++it)
+		std::cout << *it << '\t';
+	std::cout << std::endl;
+}
 
-// template<typename T>
-// void	printPair(const T& c) 
-// {   
-// 	std::cout << "pair : \n";
-//     typename T::const_iterator it = c.begin(); // Utilisation de const_iterator pour les conteneurs const
-//     for (; it != c.end(); ++it)
-// 	{
-//     	std::cout << "first : " << it->first << '\t';
-// 	}
-// 	std::cout << std::endl;
-// 	it = c.begin();
-//     for (; it != c.end(); ++it)
-//     {
-// 		std::cout << "second: " << it->second << '\t';
-// 	}
-// 	std::cout << std::endl;
-// }   
+template<typename T>
+void	printPair(const T& c) 
+{   
+	std::cout << "pair : \n";
+    typename T::const_iterator it = c.begin(); // Utilisation de const_iterator pour les conteneurs const
+    for (; it != c.end(); ++it)
+	{
+    	std::cout << "first : " << it->first << '\t';
+	}
+	std::cout << std::endl;
+	it = c.begin();
+    for (; it != c.end(); ++it)
+    {
+		std::cout << "second: " << it->second << '\t';
+	}
+	std::cout << std::endl;
+}   
 
 #endif

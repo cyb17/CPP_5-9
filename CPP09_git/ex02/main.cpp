@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 15:35:56 by yachen            #+#    #+#             */
-/*   Updated: 2024/06/08 14:18:34 by yachen           ###   ########.fr       */
+/*   Updated: 2024/06/09 10:26:40 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,15 @@ int	main( int argc, char** argv )
 		{
 			PmergeMe	merge( argv + 1 );
 			
-			std::clock_t	vExeTime = clock();
-			std::vector<int>	v = merge.vectorMergeInsertSort();
-			vExeTime = clock() - vExeTime;
-			merge.printProgramInfo( v );
-			std::cout << std::fixed << std::setprecision( 5 );
-			std::cout << "time to process a range of " << argc - 1 << " elements with std::vector : "\
-			<< vExeTime << " clicks of CPU | " << static_cast<float>(vExeTime) / CLOCKS_PER_SEC << "us" << '\n';
+			// std::clock_t	vExeTime = clock();
+			// std::vector<int>	v = merge.vectorMergeInsertSort();
+			// vExeTime = clock() - vExeTime;
+			// merge.printProgramInfo( v );
+			// std::cout << std::fixed << std::setprecision( 5 );
+			// std::cout << "time to process a range of " << argc - 1 << " elements with std::vector : "\
+			// << vExeTime << " clicks of CPU | " << static_cast<float>(vExeTime) / CLOCKS_PER_SEC << "us" << '\n';
+			merge.listMergeInsertSort();
+
 		}
 		catch ( const std::invalid_argument& e )
 		{
