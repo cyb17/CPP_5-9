@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 13:10:38 by yachen            #+#    #+#             */
-/*   Updated: 2024/05/31 15:52:36 by yachen           ###   ########.fr       */
+/*   Updated: 2024/06/10 14:31:24 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include <cctype>
 #include <cstring>
 #include <climits>
+#include <iostream>
 
 RPN::RPN() {}
 
@@ -49,6 +50,8 @@ int	RPN::calculateResult( const char* exp )
 			stack.pop();
 			long	operand2 = stack.top();
 			stack.pop();
+			if ( operand1 == 0 && operand2 == 1 && exp[i] == '/')
+				throw std::invalid_argument( "1 / 0 is not possible" );
 			rslt = doOperation( exp[i], operand2, operand1 );
 			if (rslt < INT_MIN || rslt > INT_MAX)
 				throw std::runtime_error( "result exceeded the limit of an int" );
