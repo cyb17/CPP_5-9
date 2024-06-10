@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 16:08:24 by yachen            #+#    #+#             */
-/*   Updated: 2024/06/09 18:00:31 by yachen           ###   ########.fr       */
+/*   Updated: 2024/06/10 11:36:31 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,15 +65,19 @@ class	PmergeMe
 template<typename T>
 void	PmergeMe::printProgramInfo( T& c )
 {
-	std::cout << "\nBefore: ";
+	std::cout << "\nBefore: " << BLUE;
 	int i = - 1;
-	while (_sequence[++i])
+	while (_sequence[++i] && i < 10)
 		std::cout << _sequence[i] << '\t';
-	std::cout << "\nAfter: ";
+	if (_sequence[i])
+		std::cout << "[...]\n";
+	std::cout << DEF << "\nAfter: " << YELLOW;
 	typename T::const_iterator	it = c.begin();
-	for (; it != c.end(); ++it)
+	for (; it != c.end() && i > 0; ++it, --i)
 		std::cout << *it << '\t';
-	std::cout << "\n\n";
+	if (c.size() > 10 )
+		std::cout << "[...]\n";
+	std::cout << "\n\n" << DEF;
 }
 
 template<typename T>

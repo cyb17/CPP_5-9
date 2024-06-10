@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 13:02:07 by yachen            #+#    #+#             */
-/*   Updated: 2024/06/09 17:53:58 by yachen           ###   ########.fr       */
+/*   Updated: 2024/06/10 10:25:10 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ void	PmergeMe::parseSequence()
 		long number = std::atol( nbStr.c_str() );
         if (number < 0 || (number == 0 && nbStr != "0") || number > std::numeric_limits<int>::max())
             throw std::invalid_argument( "nb must be a positive integer: " + nbStr );
-        // _unsortedList.push_back( static_cast<int>( number ) );
 	}
 }
 
