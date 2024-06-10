@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 16:08:24 by yachen            #+#    #+#             */
-/*   Updated: 2024/06/10 11:36:31 by yachen           ###   ########.fr       */
+/*   Updated: 2024/06/10 11:54:46 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ class	PmergeMe
 		char**								_sequence;
 		
 		void				parseSequence();
+		template<typename T>
+		T					sequenceToNblist();
 		
 		std::vector<std::pair<int,int> >	makeVectorPairlist( const std::vector<int>& unsorted );
 		void								mergeVector( std::vector<std::pair<int, int> >& pair, const int begin, const int mid, const int end );
@@ -53,8 +55,6 @@ class	PmergeMe
 		PmergeMe&	operator=( const PmergeMe& other );
 		
 		template<typename T>
-		T					sequenceToNblist();
-		template<typename T>
 		void				printProgramInfo( T& c );
 		
 		std::vector<int>	vectorMergeInsertSort();
@@ -65,19 +65,22 @@ class	PmergeMe
 template<typename T>
 void	PmergeMe::printProgramInfo( T& c )
 {
-	std::cout << "\nBefore: " << BLUE;
-	int i = - 1;
-	while (_sequence[++i] && i < 10)
-		std::cout << _sequence[i] << '\t';
-	if (_sequence[i])
-		std::cout << "[...]\n";
-	std::cout << DEF << "\nAfter: " << YELLOW;
-	typename T::const_iterator	it = c.begin();
-	for (; it != c.end() && i > 0; ++it, --i)
-		std::cout << *it << '\t';
-	if (c.size() > 10 )
-		std::cout << "[...]\n";
-	std::cout << "\n\n" << DEF;
+	if (_sequence)
+	{
+		std::cout << "\nBefore: " << BLUE;
+		int i = - 1;
+		while (_sequence[++i] && i < 10)
+			std::cout << _sequence[i] << '\t';
+		if (_sequence[i])
+			std::cout << "[...]\n";
+		std::cout << DEF << "\nAfter: " << YELLOW;
+		typename T::const_iterator	it = c.begin();
+		for (; it != c.end() && i > 0; ++it, --i)
+			std::cout << *it << '\t';
+		if (c.size() > 10 )
+			std::cout << "[...]\n";
+		std::cout << "\n\n" << DEF;
+	}
 }
 
 template<typename T>

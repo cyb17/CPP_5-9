@@ -6,7 +6,7 @@
 /*   By: yachen <yachen@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 13:02:07 by yachen            #+#    #+#             */
-/*   Updated: 2024/06/10 10:25:10 by yachen           ###   ########.fr       */
+/*   Updated: 2024/06/10 11:58:51 by yachen           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ PmergeMe::PmergeMe( char** sequence ) : _unpaired( -1 ), _sequence( sequence ) {
 PmergeMe::PmergeMe( const PmergeMe& other )
 {
 	_sequence = other._sequence;
+	_unpaired = -1;
 }
 
 PmergeMe::~PmergeMe() {}
@@ -29,7 +30,10 @@ PmergeMe::~PmergeMe() {}
 PmergeMe&	PmergeMe::operator=( const PmergeMe& other )
 {
 	if (this != &other)
+	{
 		_sequence = other._sequence;
+		_unpaired  = -1;
+	}
 	return *this;
 }
 
